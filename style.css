@@ -33,14 +33,15 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    z-index: 1;
 }
 
 .icon {
     width: 90px;
     aspect-ratio: 1;
-    background: gray;
     border-radius: 15px;
     transition: all 0.1s ease-out;
+    background: gray;
 }
 
 .app-name {
@@ -105,21 +106,26 @@ body {
 
 /* Mobile */
 
-@media (max-width: 767px) {
+@media (max-width: 800px) {
     .app-grid {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: flex-start;
+        justify-content: center;
         gap: 20px;
         padding: 20px;
     }
 
     .app {
-        width: 100px;
-        height: 120px;
+        width: 80px;
+        height: 90px;
     }
     
+    .icon {
+        width: 70px;
+        aspect-ratio: 1;
+    }
+
     .top-bar {
         justify-content: center;
     }
@@ -183,7 +189,7 @@ body {
         position: absolute;
         color: rgba(255, 255, 255, 0.7);
         font-size: 16px;
-        margin-left: -70px;
+        margin-left: -150px;
     }
     .hideicon {
         display: none;
@@ -192,7 +198,7 @@ body {
 
 /* Tablet/Laptop/PC */
 
-@media (min-width: 768px) {
+@media (min-width: 800px) {
     .app-grid {
         display: flex;
         flex-direction: row;
@@ -282,10 +288,97 @@ body {
     }
 }
 
-/* Icons */
+@media (max-width: 800px) {
+    #skills-sm {
+        display: none;
+    }
+}
 
-#github {
+@media (max-width: 885px) {
+    #websites-sm {
+        display: none;
+    }
+}
+
+@media (max-width: 885px) {
+    #gallery-sm {
+        display: none;
+    }
+}
+
+@media (max-width: 975px) {
+    #gallery-sm {
+        display: none;
+    }
+}
+
+@media (max-width: 1052px) {
+    #github-sm {
+        display: none;
+    }
+}
+
+@media (max-width: 1140px) {
+    #contact-sm {
+        display: none;
+    }
+}
+
+
+    /* Icons */
+
+#github, #github-sm{
     background-image: url('assets/github.jpg');
     background-position: center center;
     background-size: cover;
 }
+
+#aboutme, #aboutme-sm {
+    background-image: url('assets/aboutme.png');
+    background-position: center center;
+    background-size: cover;
+}
+
+#projects, #projects-sm {
+    background-image: url('assets/projects.png');
+    background-position: center center;
+    background-size: cover;
+}
+
+#skills, #skills-sm {
+    background-image: url('assets/skills.png');
+    background-position: center center;
+    background-size: cover;
+}
+
+#websites, #websites-sm {
+    background-image: url('assets/websites.png');
+    background-position: center center;
+    background-size: cover;
+}
+
+#contact, #contact-sm {
+    background-image: url('assets/contact.png');
+    background-position: center center;
+    background-size: cover;
+}
+
+#gallery, #gallery-sm {
+    background-image: url('assets/gallery.png');
+    background-position: center center;
+    background-size: cover;
+}
+
+#documents, #documents-sm {
+    background-image: url('assets/documents.png');
+    background-position: center center;
+    background-size: cover;
+}
+
+#settings, #settings-sm {
+    background-image: url('assets/settings.png');
+    background-position: center center;
+    background-size: cover;
+}
+
+
