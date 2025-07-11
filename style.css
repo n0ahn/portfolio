@@ -63,6 +63,11 @@ body {
         gap: 20px;
         padding: 20px;
     }
+
+    .app {
+        width: 100px;
+        height: 120px;
+    }
 }
 
 /* Tablet/Laptop/PC */
