@@ -4,56 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta charset="UTF-8">
     <title>Noah</title>
 </head>
 <body>
     <div class="wrapper">
+        <div class="logo-large"></div>
+        <div class="top-bar">
+            <div class="infobox">
+                <i class="fa-solid fa-battery-quarter" style="color: #ffffff; font-size: 14px;"></i>
+                <p id="battery" class="top-bar-text">15%</p>
+                <i class="fa-solid fa-wifi" style="color: #ffffff; font-size: 14px;"></i>
+            </div>
+            <div class="infobox">
+                <i class="fa-solid fa-calendar-days" style="color: #ffffff; font-size: 14px;"></i>
+                <span class="top-bar-text" id="date">--/--/----</span>
+                <p class="top-bar-text">|</p>
+                <i class="fa-solid fa-clock" style="color: #ffffff; font-size: 14px;"></i>
+                <span class="top-bar-text" id="clock">--:--:--</span>
+            </div>
+        </div>
         <div class="app-grid">
             <div class="app">
                 <a class="icon" id="github" href="https://github.com/noahniemeijer" target="_blank"></a>
                 <p class="app-name">GitHub</p>
             </div>
-            <div class="app">
-                <div class="icon"></div>
-                <p class="app-name">App</p>
-            </div>
-            <div class="app">
-                <div class="icon"></div>
-                <p class="app-name">App</p>
-            </div>
-            <div class="app">
-                <div class="icon"></div>
-                <p class="app-name">App</p>
-            </div>
-            <div class="app">
-                <div class="icon"></div>
-                <p class="app-name">App</p>
-            </div>
-            <div class="app">
-                <div class="icon"></div>
-                <p class="app-name">App</p>
-            </div>
-            <div class="app">
-                <div class="icon"></div>
-                <p class="app-name">App</p>
-            </div>
-            <div class="app">
-                <div class="icon"></div>
-                <p class="app-name">App</p>
-            </div>
-            <div class="app">
-                <div class="icon"></div>
-                <p class="app-name">App</p>
-            </div>
-            <div class="app">
-                <div class="icon"></div>
-                <p class="app-name">App</p>
-            </div>
-            <div class="app">
-                <div class="icon"></div>
-                <p class="app-name">App</p>
+        </div>
+        <div class="taskbar-container">
+            <div class="taskbar">
+                <div id="homebutton"></div>
+                <input class="searchbar" placeholder="Search...">
+                    <i class="fa-solid fa-search" id="search-icon"></i>
+                </input>
+                <a class="tb-icon" id="github" href="https://github.com/noahniemeijer" target="_blank"></a>
             </div>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
