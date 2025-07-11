@@ -1,11 +1,55 @@
-.grid {
+/* Global */
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.wrapper {
+    background-image: url("assets/wall.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+}
+
+/* Mobile */
+
+.app-grid {
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .square {
-    background-color: gray;
+    margin: 10px;
     width: 100px;
     aspect-ratio: 1;
-    margin: 10px;
-    float: left;
+    background: gray;
+}
+
+/* Tablet/Laptop/PC */
+
+@media (min-width: 768px) {
+
+    .app-grid {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 70%;
+    }
+
+    .square {
+        margin: 10px;
+        width: 100px;
+        aspect-ratio: 1;
+        background: gray;
+    }
 }
