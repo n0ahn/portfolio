@@ -21,18 +21,22 @@ body {
 }
 
 /* Mobile */
+@media (max-width: 767px) {
 
-.app-grid {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
+    .app-grid {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
+    }
 
-.square {
-    margin: 10px;
-    width: 100px;
-    aspect-ratio: 1;
-    background: gray;
+    .square {
+        width: 110px;
+        aspect-ratio: 1;
+        background: gray;
+    }
 }
 
 /* Tablet/Laptop/PC */
@@ -44,10 +48,11 @@ body {
         flex-direction: row;
         flex-wrap: wrap;
         width: 70%;
+        gap: 20px;
+        padding: 20px;
     }
 
     .square {
-        margin: 10px;
         width: 100px;
         aspect-ratio: 1;
         background: gray;
