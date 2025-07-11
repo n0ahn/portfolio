@@ -33,7 +33,7 @@ body {
     }
 
     .square {
-        width: 110px;
+        width: 100px;
         aspect-ratio: 1;
         background: gray;
     }
