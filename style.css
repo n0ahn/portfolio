@@ -103,9 +103,9 @@ body {
 }
 
 
-/* Mobile */
+/* Mobile/Tablet */
 
-@media (max-width: 900px) {
+@media (max-width: 730px) {
     .app-grid {
         display: flex;
         flex-direction: row;
@@ -172,9 +172,41 @@ body {
     }
 }
 
+@media (max-width: 350px) {
+    .app {
+        width: 80px;
+        height: 90px;
+    }
+    
+    .icon {
+        width: 60px;
+        aspect-ratio: 1;
+    }
+}
+
+@media (max-width: 320px) {
+    .app {
+        width: 70px;
+        height: 80px;
+    }
+    
+    .icon {
+        width: 50px;
+        aspect-ratio: 1;
+    }
+
+    .app-name {
+        font-size: 12px;
+    }
+
+    .top-bar-text {
+        font-size: 10px;
+    }
+}
+
 /* Tablet/Laptop/PC */
 
-@media (min-width: 900px) {
+@media (min-width: 730px) {
     .app-grid {
         display: flex;
         flex-direction: row;
@@ -244,7 +276,7 @@ body {
         height: 60%;
         background-color: rgba(45, 45, 45, 0.4);
         border-radius: 25px;
-        padding-left: 60px;
+        padding-left: 20px;
         padding-right: 20px;
         border: none;
         outline: none;
@@ -255,12 +287,6 @@ body {
     .searchbar:focus {
         border: solid 2px;
         border-color: rgba(255, 255, 255, 0.7);
-    }
-    #search-icon {
-        position: absolute;
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 16px;
-        margin-left: 140px;;
     }
     .app {
         width: 110px;
@@ -323,6 +349,22 @@ body {
 
 @media (max-height: 350px) {
     .app {
+        width: 60px;
+        height: 70px;
+    }
+    
+    .icon {
+        width: 50px;
+        aspect-ratio: 1;
+    }
+
+    .app-name {
+        font-size: 10px;
+    }
+}
+
+@media (max-height: 250px) {
+    .app {
         width: 50px;
         height: 60px;
     }
@@ -333,23 +375,95 @@ body {
     }
 
     .app-name {
-        font-size: 10px;
+        font-size: 8px;
     }
 }
 
-@media (max-height: 350px) {
+@media (min-height: 1000px) {
     .app {
-        width: 40px;
-        height: 50px;
+        width: 120px;
+        height: 140px;
     }
     
     .icon {
-        width: 30px;
+        width: 100px;
         aspect-ratio: 1;
     }
 
     .app-name {
-        font-size: 8px;
+        font-size: 22px;
+    }
+
+    .taskbar {
+        height: 100px;
+    }
+
+    .top-bar {
+        height: 60px;
+    }
+
+    .top-bar-text {
+        font-size: 18px;
+    }
+}
+
+@media (min-height: 1200px) {
+    .app {
+        width: 130px;
+        height: 150px;
+    }
+    
+    .icon {
+        width: 110px;
+        aspect-ratio: 1;
+    }
+
+    .app-name {
+        font-size: 24px;
+    }
+
+    .taskbar {
+        height: 110px;
+    }
+
+    .top-bar {
+        height: 70px;
+    }
+
+    .top-bar-text {
+        font-size: 22px;
+    }
+}
+
+@media (min-height: 1500px) {
+    .app {
+        width: 140px;
+        height: 160px;
+    }
+    
+    .icon {
+        width: 120px;
+        aspect-ratio: 1;
+    }
+
+    .app-name {
+        font-size: 24px;
+    }
+
+    .taskbar {
+        height: 120px;
+    }
+
+    .top-bar {
+        height: 80px;
+    }
+
+    .top-bar-text {
+        font-size: 26px;
+    }
+
+    #icontest {
+        scale: 26px;
     }
 }
 
