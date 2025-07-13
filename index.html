@@ -10,7 +10,13 @@
     <title>Noah</title>
 </head>
 <body>
-    <div class="wrapper">
+    <div id="startup">
+        <div id="startup-bg"></div>
+        <div class="profile-picture"></div>
+        <p id="username">admin</p>
+        <button class="start-button" onclick="startWebsite()"><i class="fa-solid fa-arrow-right" style="color: white; font-size: 25px;"></i></button>
+    </div>
+    <div id="main-content">
         <div class="logo-large"></div>
         <div class="top-bar">
             <div class="infobox">
@@ -67,9 +73,7 @@
         <div class="taskbar-container">
             <div class="taskbar">
                 <div id="homebutton"></div>
-                <input class="searchbar" placeholder="Search...">
-                    <i class="fa-solid fa-search" id="search-icon"></i>
-                </input>
+                <input class="searchbar" placeholder="Search..."></input>
                 <a class="tb-icon" id="settings-sm"></a>
                 <a class="tb-icon" id="projects-sm"></a>
                 <a class="tb-icon" id="documents-sm"></a>

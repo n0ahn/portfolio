@@ -1,5 +1,15 @@
-(function () {
+function startWebsite() {
+  const startup = document.getElementById("startup");
 
+  startup.classList.add("slide-up");
+
+  setTimeout(() => {
+    startup.style.display = "none";
+  }, 3000);
+}
+
+
+(function () {
   var clockElement = document.getElementById("clock");
   var dateElement = document.getElementById("date");
 
