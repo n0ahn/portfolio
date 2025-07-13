@@ -20,12 +20,17 @@
             <div class="loading-fill"></div>
         </div>
     </div>
+    <div id="shutdown-window" style="display: none;">
+        <p class="alert-text">Are you sure you want to shutdown?</p>
+        <button class="confirm-button" onclick="shutdown()">Yes</button>
+        <button class="confirm-button" onclick="closeShutdownWindow()">No</button>
+    </div>
     <div id="login">
         <div id="login-bg"></div>
         <div class="profile-picture"></div>
         <p id="username">admin</p>
         <button class="start-button" onclick="startWebsite()"><i class="fa-solid fa-arrow-right" style="color: white; font-size: 25px;"></i></button>
-        <button class="power-button" onclick="shutdown()"><i class="fa-solid fa-power-off" style="color: white; font-size: 25px;"></i></button>
+        <button class="power-button" onclick="openShutdownWindow()"><i class="fa-solid fa-power-off" style="color: white; font-size: 25px;"></i></button>
     </div>
     <div id="main-content">
         <div class="logo-large"></div>

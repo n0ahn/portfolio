@@ -8,11 +8,11 @@ const text = document.getElementById('startup-text');
 
     setTimeout(() => {
         startup.classList.add("fade");
-    }, 2500);
+    }, 2000);
     setTimeout(() => {
         document.getElementById("startup").style.display = "none";
         document.getElementById("startup").innerHTML = "";
-    }, 3500);
+    }, 2500);
     
 
 (function () {
@@ -43,6 +43,7 @@ function startWebsite() {
 
 function shutdown() {
     login.classList.add("fade");
+    document.getElementById("shutdown-window").classList.add("out");
     document.getElementById("shutdown").style.display = "flex";
     setTimeout(() => {
         document.getElementById("login").style.display = "none";
@@ -62,6 +63,17 @@ function shutdown() {
 
     setTimeout(() => {
         window.open("https://rick.nerial.uk/video.mp4", "_self")
-    }, 5000);
+    }, 3000);
 
+}
+
+function openShutdownWindow() {
+    document.getElementById("shutdown-window").classList.remove("out"); 
+    document.getElementById("shutdown-window").style.display = "flex";
+}
+function closeShutdownWindow() {
+    document.getElementById("shutdown-window").classList.add("out");
+    setTimeout(() => {
+        document.getElementById("shutdown-window").style.display = "none";
+    }, 300);
 }
