@@ -17,7 +17,7 @@ body {
     height: 100%;
 }
 
-#startup {
+#shutdown {
     position: fixed;
     display: flex;
     flex-direction: column;
@@ -25,39 +25,68 @@ body {
     align-items: center;
     justify-content: center;
     height: 100%;
-    transition: transform 1s ease;
+    transition: transform 1s ease, opacity 1s ease;
+    background-color: black;
+    z-index: 10;
+}
+
+#shutdown-text {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-size: 25px;
+    font-weight: 500;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: white;
+    z-index: 11x;
+    margin-top: 10px;
+}
+
+#login {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    top: 0; left: 0; right: 0; bottom: 0;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    transition: transform 1s ease, opacity 1s ease;
     background-color: #0C1428;
-    z-index: 5;
-    border-radius: 40px;
+    z-index: 20;
 }
 
-#startup.slide-up {
+#login.slide-up {
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
     transform: translateY(-110%);
-    border: solid 2px;
-    border-color: #313a50;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
-#startup-bg {
+#login.fade {
+    opacity: 0;
+}
+
+#login-bg {
     position: fixed;
     width: 100%;
     height: 100%;
     background-image: url("assets/wall.jpg");
     opacity: 0.3;
-    z-index: 7;
+    z-index: 22;
     border-radius: 40px;
 }
 
 .profile-picture {
     width: 200px;
     aspect-ratio: 1;
-    background-color: white;
-    background-image: url("assets/profile.jpg");
-    background-size: cover;
+    background-image: url("assets/profile.png");
+    background-size: 220px;
     background-position: center center;
-    border-radius: 150px;
     margin-bottom: 0px;
-    z-index: 8;
+    z-index: 23;
+    border-radius: 150px;
+    border: solid 7px;
+    border-color: #313a50;
 }
 
 #username {
@@ -68,7 +97,7 @@ body {
     -ms-user-select: none;
     user-select: none;
     color: white;
-    z-index: 8;
+    z-index: 23;
     margin-top: 10px;
 }
 
@@ -79,7 +108,7 @@ body {
     border: none;
     border-radius: 25px;
     cursor: pointer;
-    z-index: 8;
+    z-index: 23;
     transition: all 0.2s ease;
 }
 
@@ -87,7 +116,25 @@ body {
     filter: brightness(1.2);
     scale: 1.15;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-    transform: rotate(-4deg)
+}
+
+.power-button {
+    position: absolute;
+    background-color: #1c2c57;
+    width: 60px;
+    aspect-ratio: 1;
+    border: none;
+    border-radius: 30px;
+    right: 20px;
+    bottom: 20px;
+    transition: all 0.2s ease;
+    z-index: 23;
+}
+
+.power-button:hover {
+    cursor: pointer;
+    filter: brightness(1.2);
+    scale: 1.15;
 }
 
 #main-content {
@@ -98,6 +145,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     z-index: -1;
+    transition: all 1s ease;
 }
 
 .app {
@@ -377,42 +425,6 @@ body {
     }
 }
 
-@media (max-width: 800px) {
-    #skills-sm {
-        display: none;
-    }
-}
-
-@media (max-width: 885px) {
-    #websites-sm {
-        display: none;
-    }
-}
-
-@media (max-width: 885px) {
-    #gallery-sm {
-        display: none;
-    }
-}
-
-@media (max-width: 975px) {
-    #gallery-sm {
-        display: none;
-    }
-}
-
-@media (max-width: 1052px) {
-    #github-sm {
-        display: none;
-    }
-}
-
-@media (max-width: 1140px) {
-    #contact-sm {
-        display: none;
-    }
-}
-
 @media (max-height: 600px) {
     .app {
         width: 90px;
@@ -564,6 +576,42 @@ body {
         font-size: 26px;
     }
 
+}
+
+@media (max-width: 800px) {
+    #skills-sm {
+        display: none;
+    }
+}
+
+@media (max-width: 885px) {
+    #websites-sm {
+        display: none;
+    }
+}
+
+@media (max-width: 885px) {
+    #gallery-sm {
+        display: none;
+    }
+}
+
+@media (max-width: 975px) {
+    #gallery-sm {
+        display: none;
+    }
+}
+
+@media (max-width: 1052px) {
+    #github-sm {
+        display: none;
+    }
+}
+
+@media (max-width: 1140px) {
+    #contact-sm {
+        display: none;
+    }
 }
 
 
