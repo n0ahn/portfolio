@@ -28,6 +28,15 @@ body {
     transition: transform 1s ease, opacity 1s ease;
     background-color: black;
     z-index: 10;
+    text-align: center;
+}
+
+.oslogo {
+    width: 200px;
+    aspect-ratio: 1;
+    background: url('assets/logo-transparent.png');
+    background-position: center center;
+    background-size: cover;
 }
 
 #shutdown-text {
@@ -39,7 +48,64 @@ body {
     user-select: none;
     color: white;
     z-index: 11x;
-    margin-top: 10px;
+}
+
+#startup {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    top: 0; left: 0; right: 0; bottom: 0;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    background-color: black;
+    z-index: 30;
+    text-align: center;
+}
+
+#startup.fade {
+    opacity: 0;
+}
+
+#startup-text {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-size: 25px;
+    font-weight: 500;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: white;
+    z-index: 31x;
+    margin-bottom: 60px;
+}
+
+.loading-bar {
+    width: 250px;
+    height: 30px;
+    background-color: black;
+    border: solid 5px;
+    border-color: white;
+    border-radius: 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.loading-fill {
+    height: 20px;
+    background-color: white;
+    border-radius: 100px;
+    animation: fill 2s linear forwards;
+    margin: 5px;
+}
+@keyframes fill {
+  from {
+    width: 10%;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 #login {
@@ -176,7 +242,7 @@ body {
 
 .logo-large {
     position: absolute;
-    width: 200px;
+    width: 300px;
     aspect-ratio: 1;
     top: 50%;
     left: 50%;
@@ -491,91 +557,6 @@ body {
     .app-name {
         font-size: 8px;
     }
-}
-
-@media (min-height: 1000px) {
-    .app {
-        width: 120px;
-        height: 140px;
-    }
-    
-    .icon {
-        width: 100px;
-        aspect-ratio: 1;
-    }
-
-    .app-name {
-        font-size: 22px;
-    }
-
-    .taskbar {
-        height: 100px;
-    }
-
-    .top-bar {
-        height: 60px;
-    }
-
-    .top-bar-text {
-        font-size: 18px;
-    }
-}
-
-@media (min-height: 1200px) {
-    .app {
-        width: 130px;
-        height: 150px;
-    }
-    
-    .icon {
-        width: 110px;
-        aspect-ratio: 1;
-    }
-
-    .app-name {
-        font-size: 24px;
-    }
-
-    .taskbar {
-        height: 110px;
-    }
-
-    .top-bar {
-        height: 70px;
-    }
-
-    .top-bar-text {
-        font-size: 22px;
-    }
-}
-
-@media (min-height: 1500px) {
-    .app {
-        width: 140px;
-        height: 160px;
-    }
-    
-    .icon {
-        width: 120px;
-        aspect-ratio: 1;
-    }
-
-    .app-name {
-        font-size: 24px;
-    }
-
-    .taskbar {
-        height: 120px;
-    }
-
-    .top-bar {
-        height: 80px;
-    }
-
-    .top-bar-text {
-        font-size: 26px;
-    }
-
 }
 
 @media (max-width: 800px) {
