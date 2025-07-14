@@ -178,11 +178,12 @@ body {
     width: 150px;
     aspect-ratio: 4;
     background-color: #090f1bd4;
-    border: none;
     border-radius: 25px;
     cursor: pointer;
     z-index: 23;
     transition: all 0.2s ease;
+    border: solid 2px;
+    border-color: rgba(73, 71, 100, 0.3);
 }
 
 .start-button:hover {
@@ -806,6 +807,8 @@ body {
 
 }
 
+/* Spacings Fix */
+
 @media (max-height: 600px) {
     .app {
         width: 90px;
@@ -911,7 +914,7 @@ body {
 }
 
 
-    /* Icons */
+/* Icons */
 
 #github, #github-sm{
     background-image: url('assets/github.jpg');
@@ -966,5 +969,7 @@ body {
     background-position: center center;
     background-size: cover;
 }
+
+/* Apps */
 
 
