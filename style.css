@@ -270,6 +270,7 @@ body {
     font-family: "M PLUS Rounded 1c", sans-serif;
     font-weight: 500;
     transition: all 0.2s ease;
+    color: black;
 }
 
 .confirm-button:hover {
@@ -465,6 +466,10 @@ body {
         height: 40px;
         background-color: rgba(0,0,0,0);
         transition: all 0.2s ease;
+    }
+
+    #shutdown-window, #restart-window, #logout-window {
+        background-color: #090f1b;
     }
 
     .start-menu-button:hover {
