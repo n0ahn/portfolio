@@ -32,13 +32,27 @@ const text = document.getElementById('startup-text');
 }());
 
 function startWebsite() {
-  const login = document.getElementById("login");
+    const login = document.getElementById("login");
+    login.classList.remove("slide-down");
+    login.classList.remove("fade");
+    login.classList.add("slide-up");
 
-  login.classList.add("slide-up");
+    setTimeout(() => {
+        document.getElementById("shutdown-window").style.display = "none";
+    }, 3000);
+}
 
-  setTimeout(() => {
-    login.style.display = "none";
-  }, 3000);
+
+function logout() {
+    const login = document.getElementById("login");
+    const start = document.getElementById('start-menu');
+    document.getElementById("toggleCheckbox").checked = false;
+    start.classList.remove('active');
+    closeLogoutWindow();
+    login.style.display = "flex";
+    login.classList.remove("slide-up", "fade");
+    login.classList.add("slide-down")
+    document.getElementById("start-menu").style.display
 }
 
 function shutdown() {
@@ -67,6 +81,10 @@ function shutdown() {
 
 }
 
+function restart() {
+    location.reload();
+}
+
 function openShutdownWindow() {
     document.getElementById("shutdown-window").classList.remove("out"); 
     document.getElementById("shutdown-window").style.display = "flex";
@@ -77,3 +95,37 @@ function closeShutdownWindow() {
         document.getElementById("shutdown-window").style.display = "none";
     }, 300);
 }
+function openRestartWindow() {
+    document.getElementById("restart-window").classList.remove("out"); 
+    document.getElementById("restart-window").style.display = "flex";
+}
+function closeRestartWindow() {
+    document.getElementById("restart-window").classList.add("out");
+    setTimeout(() => {
+        document.getElementById("restart-window").style.display = "none";
+    }, 300);
+}
+function openLogoutWindow() {
+    document.getElementById("logout-window").classList.remove("out"); 
+    document.getElementById("logout-window").style.display = "flex";
+}
+function closeLogoutWindow() {
+    document.getElementById("logout-window").classList.add("out");
+    setTimeout(() => {
+        document.getElementById("logout-window").style.display = "none";
+    }, 300);
+}
+
+function toggleStart() {
+    const checkbox = document.getElementById('toggleCheckbox');
+    const start = document.getElementById('start-menu');
+
+    if (checkbox.checked) {
+        setTimeout(() => {
+            start.classList.add('active');
+        }, 1);
+    } 
+    else if (!checkbox.checked) {
+        start.classList.remove('active');
+    }
+  }

@@ -128,6 +128,13 @@ body {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
+#login.slide-down {
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    transform: translateY(0);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
 #login.fade {
     opacity: 0;
 }
@@ -170,7 +177,7 @@ body {
 .start-button {
     width: 150px;
     aspect-ratio: 4;
-    background-color: #1c2c57;
+    background-color: #090f1bd4;
     border: none;
     border-radius: 25px;
     cursor: pointer;
@@ -186,7 +193,7 @@ body {
 
 .power-button {
     position: absolute;
-    background-color: #1c2c57;
+    background-color: #090f1bd4;
     width: 60px;
     aspect-ratio: 1;
     border: none;
@@ -203,21 +210,23 @@ body {
     scale: 1.15;
 }
 
-#shutdown-window {
+#shutdown-window, #restart-window, #logout-window{
     animation: fly-in 0.2s forwards;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     padding: 20px;
     position: absolute;
-    right: 20px;
+    right: 30px;
     bottom: 100px;
     width: 250px;
     height: 100px;
     border-radius: 25px;
-    background-color: #1c2c57;
-    z-index: 40;
+    background-color: #090f1bd4;
+    z-index: 100;
 }
+
+
 @keyframes fly-in {
   from {
     transform: translateX(500px);
@@ -227,7 +236,7 @@ body {
   }
 }
 
-#shutdown-window.out {
+#shutdown-window.out, #restart-window.out, #logout-window.out {
     animation: fly-out 0.2s forwards;
 }
 @keyframes fly-out {
@@ -396,9 +405,10 @@ body {
         justify-content: center;
         align-items: center;
         height: 75px;
-        width: 95%;
+        width: 100%;
         background-color: rgba(0,0,0,0.4);
         border-radius: 20px;
+        margin-left: 10px; margin-right: 10px;
     }
     #homebutton {
         height: 100%;
@@ -413,6 +423,59 @@ body {
         transform: translate(0px, -5px) scale(1.1);
         cursor: pointer;
     }
+
+    #start-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: fixed;
+        bottom: 100px;
+        left: 10px; right: 10px;
+        height: auto;
+        background-color: #090f1b;
+        border-radius: 20px;
+        padding-bottom: 20px;
+        padding-top: 10px;
+        opacity: 0;
+        transform: translateY(20px);
+        pointer-events: none;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        z-index: 5;
+    }
+
+    #start-menu.active {
+        opacity: 1;
+        transform: translateY(0px);
+        pointer-events: auto;
+    }
+
+    .start-menu-logo {
+        display: none;
+    }
+
+    .start-menu-button {
+        padding-left: 25px;;
+        text-align: left;
+        font-size: 14px;
+        font-family: "M PLUS Rounded 1c", sans-serif;
+        font-weight: 500;  
+        color: white;
+        width: 100%;
+        border: none;
+        height: 40px;
+        background-color: rgba(0,0,0,0);
+        transition: all 0.2s ease;
+    }
+
+    .start-menu-button:hover {
+        cursor: pointer;
+        background-color: rgba(0,0,0,0.2);
+    }
+
+    .start-menu-button i {
+        margin-right: 10px;
+    }
+
     .searchbar {
         display: none;
     }
@@ -490,10 +553,12 @@ body {
         align-items: center;
         flex-direction: row;
         height: 75px;
-        width: 95%;
+        width: 100%;
         background-color: rgba(0,0,0,0.4);
         border-radius: 20px;
         gap: 20px;
+        margin-left: 30px;
+        margin-right: 30px;
     }
 
     .tb-icon {
@@ -514,6 +579,8 @@ body {
         margin-left: 20px;
         height: 100%;
         aspect-ratio: 1;
+        background-color: rgba(0, 0, 0, 0);
+        border: none;
         background-image: url("assets/logo-transparent.png");
         background-position: center center;
         background-size: cover;
@@ -523,9 +590,68 @@ body {
     #homebutton:hover {
         transform: translate(0px, -5px) scale(1.1);
         filter: brightness(1.2);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
         cursor: pointer;
     }
+
+    #start-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        bottom: 100px;
+        margin-left: 30px;
+        width: 300px;
+        height: 350px;
+        background-color: #090f1bd4;
+        border-radius: 20px;
+        padding-bottom: 20px;
+        padding-top: 10px;
+        opacity: 0;
+        transform: translateY(20px);
+        pointer-events: none;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        z-index: 5;
+    }
+
+    #start-menu.active {
+        opacity: 1;
+        transform: translateY(0px);
+        pointer-events: auto;
+    }
+
+    .start-menu-logo {
+        width: 100px;
+        aspect-ratio: 1;
+        background: url('assets/logo-transparent.png');
+        background-position: center center;
+        background-size: cover;
+        margin: 0;
+        margin-bottom: 90px;
+    }
+
+    .start-menu-button {
+        padding-left: 25px;;
+        text-align: left;
+        font-size: 14px;
+        font-family: "M PLUS Rounded 1c", sans-serif;
+        font-weight: 500;  
+        color: white;
+        width: 100%;
+        border: none;
+        height: 40px;
+        background-color: rgba(0,0,0,0);
+        transition: all 0.2s ease;
+    }
+
+    .start-menu-button:hover {
+        cursor: pointer;
+        background-color: rgba(0,0,0,0.2);
+    }
+
+    .start-menu-button i {
+        margin-right: 10px;
+    }
+
     .searchbar {
         display: flex;
         justify-content: flex-start;

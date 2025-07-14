@@ -13,7 +13,7 @@
         <div class="oslogo"></div>
         <p id="shutdown-text">Shutting down...</p>
     </div>
-    <div id="startup">
+  <div id="startup">
         <div class="oslogo"></div>
         <p id="startup-text">Starting...</p>
         <div class="loading-bar">
@@ -25,13 +25,23 @@
         <button class="confirm-button" onclick="shutdown()">Yes</button>
         <button class="confirm-button" onclick="closeShutdownWindow()">No</button>
     </div>
+    <div id="restart-window" style="display: none;">
+        <p class="alert-text">Are you sure you want to restart?</p>
+        <button class="confirm-button" onclick="restart()">Yes</button>
+        <button class="confirm-button" onclick="closeRestartWindow()">No</button>
+    </div>
+    <div id="logout-window" style="display: none;">
+        <p class="alert-text">Are you sure you want to logout?</p>
+        <button class="confirm-button" onclick="logout()">Yes</button>
+        <button class="confirm-button" onclick="closeLogoutWindow()">No</button>
+    </div>
     <div id="login">
         <div id="login-bg"></div>
         <div class="profile-picture"></div>
         <p id="username">admin</p>
         <button class="start-button" onclick="startWebsite()"><i class="fa-solid fa-arrow-right" style="color: white; font-size: 25px;"></i></button>
         <button class="power-button" onclick="openShutdownWindow()"><i class="fa-solid fa-power-off" style="color: white; font-size: 25px;"></i></button>
-    </div>
+    </div> 
     <div id="main-content">
         <div class="logo-large"></div>
         <div class="top-bar">
@@ -86,9 +96,18 @@
                 <p class="app-name">Settings</p>
             </div>
         </div>
+        <div id="start-menu">
+            <div class="start-menu-logo"></div>
+            <button class="start-menu-button"><i class="fa-solid fa-gear"></i> Settings</button>
+            <button onclick="openLogoutWindow()" class="start-menu-button"><i class="fa-solid fa-arrow-right-from-bracket" style="transform: rotate(180deg);"></i> Logout</button>
+            <button onclick="openRestartWindow()" class="start-menu-button"><i class="fa-solid fa-arrows-rotate"></i> Restart</button>
+            <button onclick="openShutdownWindow()" class="start-menu-button"><i class="fa-solid fa-power-off"></i> Shutdown</button>
+        </div>
         <div class="taskbar-container">
             <div class="taskbar">
-                <div id="homebutton"></div>
+                <label id="homebutton">
+                    <input type="checkbox" id="toggleCheckbox" onchange="toggleStart()" style="display: none;"></input>
+                </label>
                 <input class="searchbar" placeholder="Search...">
                 <a class="tb-icon" id="settings-sm"></a>
                 <a class="tb-icon" id="projects-sm"></a>
