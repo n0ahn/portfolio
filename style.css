@@ -299,10 +299,11 @@ body {
 
 .icon {
     aspect-ratio: 1;
-    border-radius: 15px;
+    border-radius: 20px;
     transition: all 0.1s ease-out;
-    background: gray;
     cursor: pointer;
+    border: none;
+    background: none;
 }
 
 .app-name {
@@ -364,6 +365,118 @@ body {
     margin-right: 15px;
 }
 
+#app-window-container {
+    position: fixed;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    top: 0; bottom: 0; left: 0; right: 0;
+    z-index: 100;
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+#app-window-container.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.app-window {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 80%;
+    height: 80%;
+    background-color: #090f1b;
+    border-radius: 25px;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.app-window.active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.app-window.fullscreen {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 0 !important;
+}
+
+
+.app-window-top-bar {
+    width: 100%; 
+    height: 8%;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.app-window.fullscreen .app-window-top-bar {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.app-title {
+    position: absolute;
+    font-size: 20px;
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-weight: 500;  
+    color: white;
+    left: 30px;
+}
+
+.close-button {
+    height: 100%;
+    aspect-ratio: 1.2;
+    border: none;
+    border-top-right-radius: 25px;
+    background: none;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.close-button:hover {
+    background: rgba(87, 0, 0, 1);
+    cursor: pointer;
+}
+
+.fullscreen-button {
+    height: 100%;
+    aspect-ratio: 1.2;
+    border: none;
+    background: none;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.fullscreen-button:hover {
+    background: rgba(25, 25, 25, 0.5);
+    cursor: pointer;
+}
+
+.fa-xmark {
+    font-size: 3vh;
+    color: white;
+}
+
+.button-icon {
+    color: white;
+    font-size: 2.6vh;
+}
 
 /* Mobile/Tablet */
 
@@ -490,6 +603,10 @@ body {
     .hideicon {
         display: none;
     }
+    .tb-icon {
+        display: none;
+    }
+
 }
 
 @media (max-width: 350px) {
@@ -569,9 +686,10 @@ body {
     .tb-icon {
         height: 80%;
         aspect-ratio: 1;
-        background: gray;
         border-radius: 15px;
         transition: all 0.1s ease-out;
+        border: none;
+        background: none;
     }
     .tb-icon:hover {
         transform: translate(0px, -5px) scale(1.1);
@@ -606,7 +724,7 @@ body {
         bottom: 100px;
         margin-left: 30px;
         width: 300px;
-        height: 350px;
+        height: auto;
         background-color: #090f1bd4;
         border-radius: 20px;
         padding-bottom: 20px;
@@ -631,7 +749,7 @@ body {
         background-position: center center;
         background-size: cover;
         margin: 0;
-        margin-bottom: 90px;
+        margin-bottom: 20px;
     }
 
     .start-menu-button {
@@ -685,6 +803,7 @@ body {
         width: 90px;
         aspect-ratio: 1;
     }
+
 }
 
 @media (max-height: 600px) {

@@ -13,7 +13,7 @@
         <div class="oslogo"></div>
         <p id="shutdown-text">Shutting down...</p>
     </div>
-  <div id="startup">
+    <div id="startup">
         <div class="oslogo"></div>
         <p id="startup-text">Starting...</p>
         <div class="loading-bar">
@@ -41,7 +41,65 @@
         <p id="username">admin</p>
         <button class="start-button" onclick="startWebsite()"><i class="fa-solid fa-arrow-right" style="color: white; font-size: 25px;"></i></button>
         <button class="power-button" onclick="openShutdownWindow()"><i class="fa-solid fa-power-off" style="color: white; font-size: 25px;"></i></button>
-    </div> 
+    </div>       
+    <div id="app-window-container">
+        <div class="app-window" id="aboutme-app">
+            <div class="app-window-top-bar">
+                <span class="app-title"><i class="fa-solid fa-user"></i> &nbsp; About Me</span>
+                <button class="fullscreen-button" onclick="toggleFullscreen('aboutme-app')"><i class="fa-solid fa-expand button-icon"></i></button>
+                <button class="close-button" onclick="closeApp('aboutme-app')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+        <div class="app-window" id="projects-app">
+            <div class="app-window-top-bar">
+                <span class="app-title"><i class="fa-solid fa-folder"></i> &nbsp; Projects</span>
+                <button class="fullscreen-button" onclick="toggleFullscreen('projects-app')"><i class="fa-solid fa-expand button-icon"></i></button>
+                <button class="close-button" onclick="closeApp('projects-app')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+        <div class="app-window" id="skills-app">
+            <div class="app-window-top-bar">
+                <span class="app-title"><i class="fa-solid fa-code"></i> &nbsp; Skills</span>
+                <button class="fullscreen-button" onclick="toggleFullscreen('skills-app')"><i class="fa-solid fa-expand button-icon"></i></button>
+                <button class="close-button" onclick="closeApp('skills-app')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+        <div class="app-window" id="contact-app">
+            <div class="app-window-top-bar">
+                <span class="app-title"><i class="fa-solid fa-envelope"></i> &nbsp; Contact</span>
+                <button class="fullscreen-button" onclick="toggleFullscreen('contact-app')"><i class="fa-solid fa-expand button-icon"></i></button>
+                <button class="close-button" onclick="closeApp('contact-app')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+        <div class="app-window" id="websites-app">
+            <div class="app-window-top-bar">
+                <span class="app-title"><i class="fa-solid fa-window-maximize"></i> &nbsp; Websites</span>
+                <button class="fullscreen-button" onclick="toggleFullscreen('websites-app')"><i class="fa-solid fa-expand button-icon"></i></button>
+                <button class="close-button" onclick="closeApp('websites-app')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+        <div class="app-window" id="gallery-app">
+            <div class="app-window-top-bar">
+                <span class="app-title"><i class="fa-solid fa-image"></i> &nbsp; Gallery</span>
+                <button class="fullscreen-button" onclick="toggleFullscreen('gallery-app')"><i class="fa-solid fa-expand button-icon"></i></button>
+                <button class="close-button" onclick="closeApp('gallery-app')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+        <div class="app-window" id="documents-app">
+            <div class="app-window-top-bar">
+                <span class="app-title"><i class="fa-solid fa-file-lines"></i> &nbsp; Documents</span>
+                <button class="fullscreen-button" onclick="toggleFullscreen('documents-app')"><i class="fa-solid fa-expand button-icon"></i></button>
+                <button class="close-button" onclick="closeApp('documents-app')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+        <div class="app-window" id="settings-app">
+            <div class="app-window-top-bar">
+                <span class="app-title"><i class="fa-solid fa-gear"></i> &nbsp; Settings</span>
+                <button class="fullscreen-button" onclick="toggleFullscreen('settings-app')"><i class="fa-solid fa-expand button-icon"></i></button>
+                <button class="close-button" onclick="closeApp('settings-app')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+    </div>
     <div id="main-content">
         <div class="logo-large"></div>
         <div class="top-bar">
@@ -60,19 +118,19 @@
         </div>
         <div class="app-grid">
             <div class="app">
-                <a class="icon" id="aboutme"></a>
+                <button class="icon" id="aboutme" onclick="openApp('aboutme-app')"></button>
                 <p class="app-name">About Me</p>
             </div>
             <div class="app">
-                <a class="icon" id="projects"></a>
+                <button class="icon" id="projects" onclick="openApp('projects-app')"></button>
                 <p class="app-name">Projects</p>
             </div>
             <div class="app">
-                <a class="icon" id="skills"></a>
+                <button class="icon" id="skills" onclick="openApp('skills-app')"></button>
                 <p class="app-name">Skills</p>
             </div>
             <div class="app">
-                <a class="icon" id="contact"></a>
+                <button class="icon" id="contact" onclick="openApp('contact-app')"></button>
                 <p class="app-name">Contact</p>
             </div>
             <div class="app">
@@ -80,19 +138,19 @@
                 <p class="app-name">GitHub</p>
             </div>
             <div class="app">
-                <a class="icon" id="websites"></a>
+                <button class="icon" id="websites" onclick="openApp('websites-app')"></button>
                 <p class="app-name">Websites</p>
             </div>
             <div class="app">
-                <a class="icon" id="gallery"></a>
+                <button class="icon" id="gallery" onclick="openApp('gallery-app')"></button>
                 <p class="app-name">Gallery</p>
             </div>
             <div class="app">
-                <a class="icon" id="documents"></a>
+                <button class="icon" id="documents" onclick="openApp('documents-app')"></button>
                 <p class="app-name">Documents</p>
             </div>
             <div class="app">
-                <a class="icon" id="settings"></a>
+                <button class="icon" id="settings" onclick="openApp('settings-app')"></button>
                 <p class="app-name">Settings</p>
             </div>
         </div>
@@ -109,15 +167,15 @@
                     <input type="checkbox" id="toggleCheckbox" onchange="toggleStart()" style="display: none;"></input>
                 </label>
                 <input class="searchbar" placeholder="Search...">
-                <a class="tb-icon" id="settings-sm"></a>
-                <a class="tb-icon" id="projects-sm"></a>
-                <a class="tb-icon" id="documents-sm"></a>
-                <a class="tb-icon" id="aboutme-sm"></a>
-                <a class="tb-icon" id="skills-sm"></a>
-                <a class="tb-icon" id="websites-sm"></a>
-                <a class="tb-icon" id="gallery-sm"></a>
+                <button class="tb-icon" id="settings-sm" onclick="openApp('settings-app')"></button>
+                <button class="tb-icon" id="projects-sm" onclick="openApp('projects-app')"></button>
+                <button class="tb-icon" id="documents-sm" onclick="openApp('documents-app')"></button>
+                <button class="tb-icon" id="aboutme-sm" onclick="openApp('aboutme-app')"></button>
+                <button class="tb-icon" id="skills-sm" onclick="openApp('skills-app')"></button>
+                <button class="tb-icon" id="websites-sm" onclick="openApp('websites-app')"></button>
+                <button class="tb-icon" id="gallery-sm" onclick="openApp('gallery-app')"></button>
                 <a class="tb-icon" id="github-sm" href="https://github.com/noahniemeijer" target="_blank"></a>
-                <a class="tb-icon" id="contact-sm"></a>
+                <button class="tb-icon" id="contact-sm" onclick="openApp('contact-app')"></a>
             </div>
         </div>
     </div>

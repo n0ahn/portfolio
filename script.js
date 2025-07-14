@@ -1,4 +1,7 @@
-const text = document.getElementById('startup-text');
+const startupElement = document.getElementById("startup");
+
+if (startupElement && startupElement.style.display !== "none") {
+    const text = document.getElementById('startup-text');
     let dots = 0;
 
     setInterval(() => {
@@ -13,7 +16,7 @@ const text = document.getElementById('startup-text');
         document.getElementById("startup").style.display = "none";
         document.getElementById("startup").innerHTML = "";
     }, 2500);
-    
+}
 
 (function () {
     var clockElement = document.getElementById("clock");
@@ -41,7 +44,6 @@ function startWebsite() {
         document.getElementById("shutdown-window").style.display = "none";
     }, 3000);
 }
-
 
 function logout() {
     const login = document.getElementById("login");
@@ -74,11 +76,9 @@ function shutdown() {
         text.textContent = 'Shutting down' + '.'.repeat(dots);
     }, 500);
 
-
     setTimeout(() => {
         window.open("https://rick.nerial.uk/video.mp4", "_self")
     }, 3000);
-
 }
 
 function restart() {
@@ -128,4 +128,63 @@ function toggleStart() {
     else if (!checkbox.checked) {
         start.classList.remove('active');
     }
-  }
+}
+
+let activeAppId = null;
+
+function openApp(appId) {
+    const container = document.getElementById("app-window-container");
+    const app = document.getElementById(appId);
+
+    activeAppId = appId;
+
+    container.style.display = "flex";
+    setTimeout(() => {
+        container.classList.add("visible");
+        app.classList.add("active");
+    }, 10);
+}
+
+function closeApp(appId) {
+    const container = document.getElementById("app-window-container");
+    const app = document.getElementById(appId);
+
+    if (activeAppId === appId) activeAppId = null;
+
+    container.classList.remove("visible");
+    app.classList.remove("active");
+
+    setTimeout(() => {
+        container.style.display = "none";
+    }, 300);
+}
+
+function toggleFullscreen(appId) {
+    const app = document.getElementById(appId);
+    app.classList.toggle('fullscreen');
+
+    const icon = app.querySelector('.fullscreen-button i');
+    if (app.classList.contains('fullscreen')) {
+        icon.classList.remove('fa-expand');
+        icon.classList.add('fa-compress');
+    } else {
+        icon.classList.remove('fa-compress');
+        icon.classList.add('fa-expand');
+    }
+}
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && activeAppId) {
+        const app = document.getElementById(activeAppId);
+        if (!app) return;
+
+        const isFullscreen = app.classList.contains('fullscreen');
+        const container = document.getElementById("app-window-container");
+
+        if (isFullscreen) {
+            toggleFullscreen(activeAppId);
+        } else if (container.style.display !== 'none' && container.style.display !== '') {
+            closeApp(activeAppId);
+        }
+    }
+});
