@@ -196,6 +196,18 @@ function openContent(section) {
     let html = '';
 
     switch (section) {
+        case 'General':
+            html = `
+                <div class="settings-top-bar">
+                    <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
+                    <h2 class="content-title"><i class="fa-solid fa-gear"></i> &nbsp; General Settings</h2>
+                </div>
+                <p class="settings-content-text">Content</p>
+            `;
+            content.innerHTML = html;
+            document.getElementById("settings-content").classList.add("active");
+            document.getElementById("settings-sidebar").classList.add("hidden");
+            break;
         case 'Display':
             html = `
                 <div class="settings-top-bar">
@@ -203,7 +215,10 @@ function openContent(section) {
                     <h2 class="content-title"><i class="fa-solid fa-display"></i> &nbsp; Display Settings</h2>
                 </div>
                 <div class="input-field">
-                    <input class="settings-content-input" type="checkbox" id="funmode">
+                    <label class="switch">
+                        <input type="checkbox" id="funmode">
+                        <span class="slider"></span>
+                    </label>
                     <span class="settings-content-text">Fun Mode</span>
                 </div>
                 <p class="settings-content-text">Brightness:</p>
@@ -264,11 +279,11 @@ function openContent(section) {
                 updateFilters();
             });
             break;
-        case 'Sound':
+        case 'Battery':
             html = `
                 <div class="settings-top-bar">
                     <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
-                    <h2 class="content-title"><i class="fa-solid fa-volume-low"></i> &nbsp; Sound Settings</h2>
+                    <h2 class="content-title"><i class="fa-solid fa-battery-three-quarters"></i> &nbsp; Battery Settings</h2>
                 </div>
                  <p class="settings-content-text">Content</p>
             `;
@@ -280,7 +295,7 @@ function openContent(section) {
             html = `
                 <div class="settings-top-bar">
                     <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
-                    <h2 class="content-title"><i class="fa-solid fa-network-wired"></i> &nbsp; Network Settings</h2>
+                    <h2 class="content-title"><i class="fa-solid fa-globe"></i> &nbsp; Network Settings</h2>
                 </div>
                 <p class="settings-content-text">Content</p>
             `;
@@ -288,11 +303,11 @@ function openContent(section) {
             document.getElementById("settings-content").classList.add("active");
             document.getElementById("settings-sidebar").classList.add("hidden");
             break;
-        case 'Accessibility':
+        case 'Updates':
             html = `
                 <div class="settings-top-bar">
                     <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
-                    <h2 class="content-title"><i class="fa-solid fa-wheelchair"></i> &nbsp; Accessibility Settings</h2>
+                    <h2 class="content-title"><i class="fa-solid fa-download"></i> &nbsp; Updates</h2>
                 </div>
                 <p class="settings-content-text">Content</p>
             `;
@@ -300,11 +315,18 @@ function openContent(section) {
             document.getElementById("settings-content").classList.add("active");
             document.getElementById("settings-sidebar").classList.add("hidden");
             break;
-        default:
-            html = `<p>Unknown section.</p>`;
+        case 'About':
+            html = `
+                <div class="settings-top-bar">
+                    <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
+                    <h2 class="content-title"><i class="fa-solid fa-circle-info"></i> &nbsp; About this website</h2>
+                </div>
+                <p class="settings-content-text">Content</p>
+            `;
             content.innerHTML = html;
             document.getElementById("settings-content").classList.add("active");
             document.getElementById("settings-sidebar").classList.add("hidden");
+            break;
     }
 }
 

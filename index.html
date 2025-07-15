@@ -103,12 +103,12 @@
                 <div id="settings-content-container">
                     <div id="settings-sidebar">
                         <span class="sidebar-text">Menu</span>
-                        <button class="sidebar-item" onclick="openContent('System')"><i class="fa-solid fa-gear"></i> &nbsp;&nbsp; General</button>
+                        <button class="sidebar-item" onclick="openContent('General')"><i class="fa-solid fa-gear"></i> &nbsp;&nbsp; General</button>
                         <button class="sidebar-item" onclick="openContent('Display')"><i class="fa-solid fa-display"></i> &nbsp;&nbsp; Display</button>
-                        <button class="sidebar-item" onclick="openContent('Sound')"><i class="fa-solid fa-volume-high"></i> &nbsp;&nbsp; Sound</button>
+                        <button class="sidebar-item" onclick="openContent('Battery')"><i class="fa-solid fa-battery-three-quarters"></i> &nbsp;&nbsp; Battery</button>
                         <button class="sidebar-item" onclick="openContent('Network')"><i class="fa-solid fa-globe"></i> &nbsp;&nbsp; Network</button>
                         <button class="sidebar-item" onclick="openContent('Updates')"><i class="fa-solid fa-download"></i> &nbsp;&nbsp; Updates</button>
-                        <button class="sidebar-item" onclick="openContent('About')"><i class="fa-solid fa-address-card"></i> &nbsp;&nbsp; About</button>
+                        <button class="sidebar-item" onclick="openContent('About')"><i class="fa-solid fa-circle-info"></i> &nbsp;&nbsp; About</button>
 
                     </div>
                     <div id="settings-content"></div>
@@ -181,7 +181,7 @@
                     <label id="homebutton">
                         <input type="checkbox" id="toggleCheckbox" onchange="toggleStart()" style="display: none;"></input>
                     </label>
-                    <input class="searchbar" placeholder="Search...">
+                    <input  id="searchbar" class="searchbar" placeholder="Search...">
                     <button class="tb-icon" id="settings-sm" onclick="openApp('settings-app')"></button>
                     <button class="tb-icon" id="projects-sm" onclick="openApp('projects-app')"></button>
                     <button class="tb-icon" id="documents-sm" onclick="openApp('documents-app')"></button>
