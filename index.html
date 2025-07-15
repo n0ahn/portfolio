@@ -98,6 +98,18 @@
                 <button class="fullscreen-button" onclick="toggleFullscreen('settings-app')"><i class="fa-solid fa-expand button-icon"></i></button>
                 <button class="close-button" onclick="closeApp('settings-app')"><i class="fa-solid fa-xmark"></i></button>
             </div>
+            <div id="settings-content-container">
+                <div id="settings-sidebar">
+                    <span class="sidebar-text">Menu</span>
+                    <button class="sidebar-item"></button>
+                    <button class="sidebar-item"></button>
+                    <button class="sidebar-item"></button>
+                    <button class="sidebar-item"></button>
+                    <button class="sidebar-item"></button>
+                    <button class="sidebar-item"></button>
+                </div>
+                <div id="settings-content">Content</div>
+            </div>
         </div>
     </div>
     <div id="main-content">
@@ -156,7 +168,7 @@
         </div>
         <div id="start-menu">
             <div class="start-menu-logo"></div>
-            <button class="start-menu-button"><i class="fa-solid fa-gear"></i> Settings</button>
+            <button onclick="openApp('settings-app')" class="start-menu-button"><i class="fa-solid fa-gear"></i> Settings</button>
             <button onclick="openLogoutWindow()" class="start-menu-button"><i class="fa-solid fa-arrow-right-from-bracket" style="transform: rotate(180deg);"></i> Logout</button>
             <button onclick="openRestartWindow()" class="start-menu-button"><i class="fa-solid fa-arrows-rotate"></i> Restart</button>
             <button onclick="openShutdownWindow()" class="start-menu-button"><i class="fa-solid fa-power-off"></i> Shutdown</button>
