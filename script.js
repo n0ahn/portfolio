@@ -10,7 +10,7 @@ if (startupElement && startupElement.style.display !== "none") {
     }, 500);
 
     setTimeout(() => {
-        startup.classList.add("fade");
+        startupElement.classList.add("fade");
     }, 2000);
     setTimeout(() => {
         document.getElementById("startup").style.display = "none";
@@ -22,9 +22,9 @@ if (startupElement && startupElement.style.display !== "none") {
     var clockElement = document.getElementById("clock");
     var dateElement = document.getElementById("date");
 
-    function updateClockandDate (clock, date) {
-      clock.innerHTML = new Date().toLocaleTimeString();
-      date.innerHTML = new Date().toLocaleDateString('en-US', {weekday: 'short', month: 'short', day: 'numeric'});
+    function updateClockandDate(clock, date) {
+        clock.innerHTML = new Date().toLocaleTimeString();
+        date.innerHTML = new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
     }
 
     setInterval(function () {
@@ -53,11 +53,12 @@ function logout() {
     closeLogoutWindow();
     login.style.display = "flex";
     login.classList.remove("slide-up", "fade");
-    login.classList.add("slide-down")
-    document.getElementById("start-menu").style.display
+    login.classList.add("slide-down");
+    document.getElementById("start-menu").style.display;
 }
 
 function shutdown() {
+    const login = document.getElementById("login");
     login.classList.add("fade");
     document.getElementById("shutdown-window").classList.add("out");
     document.getElementById("shutdown").style.display = "flex";
@@ -77,7 +78,7 @@ function shutdown() {
     }, 500);
 
     setTimeout(() => {
-        window.open("https://rick.nerial.uk/video.mp4", "_self")
+        window.open("https://rick.nerial.uk/video.mp4", "_self");
     }, 3000);
 }
 
@@ -86,7 +87,7 @@ function restart() {
 }
 
 function openShutdownWindow() {
-    document.getElementById("shutdown-window").classList.remove("out"); 
+    document.getElementById("shutdown-window").classList.remove("out");
     document.getElementById("shutdown-window").style.display = "flex";
 }
 function closeShutdownWindow() {
@@ -96,7 +97,7 @@ function closeShutdownWindow() {
     }, 300);
 }
 function openRestartWindow() {
-    document.getElementById("restart-window").classList.remove("out"); 
+    document.getElementById("restart-window").classList.remove("out");
     document.getElementById("restart-window").style.display = "flex";
 }
 function closeRestartWindow() {
@@ -106,7 +107,7 @@ function closeRestartWindow() {
     }, 300);
 }
 function openLogoutWindow() {
-    document.getElementById("logout-window").classList.remove("out"); 
+    document.getElementById("logout-window").classList.remove("out");
     document.getElementById("logout-window").style.display = "flex";
 }
 function closeLogoutWindow() {
@@ -124,7 +125,7 @@ function toggleStart() {
         setTimeout(() => {
             start.classList.add('active');
         }, 1);
-    } 
+    }
     else if (!checkbox.checked) {
         start.classList.remove('active');
     }
@@ -189,7 +190,6 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-
 function openContent(section) {
     const content = document.getElementById('settings-content');
 
@@ -202,10 +202,67 @@ function openContent(section) {
                     <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
                     <h2 class="content-title"><i class="fa-solid fa-display"></i> &nbsp; Display Settings</h2>
                 </div>
-                <p class="settings-content-text">Content</p>
-            `;
-            document.getElementById("settings-content").classList.add("active")
-            document.getElementById("settings-sidebar").classList.add("hidden")
+                <div class="input-field">
+                    <input class="settings-content-input" type="checkbox" id="funmode">
+                    <span class="settings-content-text">Fun Mode</span>
+                </div>
+                <p class="settings-content-text">Brightness:</p>
+                <div class="input-field">
+                    <input class="settings-content-input" type="range" id="brightness" name="brightness" min="10" max="100" value="100">
+                    <span class="settings-content-text" id="brightness-value">100</span>
+                </div>
+                <p class="settings-content-text">Contrast:</p>
+                <div class="input-field">
+                    <input class="settings-content-input" type="range" id="contrast" name="contrast" min="10" max="100" value="50">
+                    <span class="settings-content-text" id="contrast-value">50</span>
+                </div>
+           `;
+            content.innerHTML = html;
+
+            document.getElementById("settings-content").classList.add("active");
+            document.getElementById("settings-sidebar").classList.add("hidden");
+
+            const funmode = document.getElementById('funmode');
+            const brightness = document.getElementById('brightness');
+            const brightnessValue = document.getElementById('brightness-value');
+            const contrast = document.getElementById('contrast');
+            const contrastValue = document.getElementById('contrast-value');
+            const desktop = document.getElementById('desktop');
+
+            function updateFilters() {
+                const brightnessVal = brightness.value / 100;
+                const contrastVal = contrast.value / 50;
+                desktop.style.filter = `brightness(${brightnessVal}) contrast(${contrastVal})`;
+            }
+
+            brightness.addEventListener('input', () => {
+                brightnessValue.textContent = brightness.value;
+                updateFilters();
+            });
+
+            contrast.addEventListener('input', () => {
+                contrastValue.textContent = contrast.value;
+                updateFilters();
+            });
+
+            funmode.addEventListener('change', () => {
+                if (funmode.checked) {
+                    brightness.max = 500;
+                    contrast.max = 250;
+
+                    brightness.value = 100;
+                    contrast.value = 50;
+                } else {
+                    brightness.max = 100;
+                    contrast.max = 100;
+
+                    if (brightness.value > 99) brightness.value = 100;
+                    if (contrast.value > 49) contrast.value = 50;
+                }
+                brightnessValue.textContent = brightness.value;
+                contrastValue.textContent = contrast.value;
+                updateFilters();
+            });
             break;
         case 'Sound':
             html = `
@@ -215,61 +272,43 @@ function openContent(section) {
                 </div>
                  <p class="settings-content-text">Content</p>
             `;
-            document.getElementById("settings-content").classList.add("active")
-            document.getElementById("settings-sidebar").classList.add("hidden")
+            content.innerHTML = html;
+            document.getElementById("settings-content").classList.add("active");
+            document.getElementById("settings-sidebar").classList.add("hidden");
             break;
         case 'Network':
             html = `
                 <div class="settings-top-bar">
                     <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
-                    <h2 class="content-title"><i class="fa-solid fa-globe"></i> &nbsp; Network Settings</h2>
-                </div>
-                 <p class="settings-content-text">Content</p>
-            `;
-            document.getElementById("settings-content").classList.add("active")
-            document.getElementById("settings-sidebar").classList.add("hidden")
-            break;
-        case 'Updates':
-            html = `
-                <div class="settings-top-bar">
-                    <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
-                    <h2 class="content-title"><i class="fa-solid fa-download"></i> &nbsp; Updates</h2>
+                    <h2 class="content-title"><i class="fa-solid fa-network-wired"></i> &nbsp; Network Settings</h2>
                 </div>
                 <p class="settings-content-text">Content</p>
             `;
-            document.getElementById("settings-content").classList.add("active")
-            document.getElementById("settings-sidebar").classList.add("hidden")
+            content.innerHTML = html;
+            document.getElementById("settings-content").classList.add("active");
+            document.getElementById("settings-sidebar").classList.add("hidden");
             break;
-        case 'About':
+        case 'Accessibility':
             html = `
                 <div class="settings-top-bar">
                     <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
-                    <h2 class="content-title"><i class="fa-solid fa-address-book"></i> &nbsp; About</h2>
+                    <h2 class="content-title"><i class="fa-solid fa-wheelchair"></i> &nbsp; Accessibility Settings</h2>
                 </div>
-                 <p class="settings-content-text">Content</p>
+                <p class="settings-content-text">Content</p>
             `;
-            document.getElementById("settings-content").classList.add("active")
-            document.getElementById("settings-sidebar").classList.add("hidden")
-            break;
-        case 'System':
-            html = `
-                <div class="settings-top-bar">
-                    <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
-                    <h2 class="content-title"><i class="fa-solid fa-gear"></i> &nbsp; General</h2>
-                </div>
-                 <p class="settings-content-text">Content</p>
-            `;
-            document.getElementById("settings-content").classList.add("active")
-            document.getElementById("settings-sidebar").classList.add("hidden")
+            content.innerHTML = html;
+            document.getElementById("settings-content").classList.add("active");
+            document.getElementById("settings-sidebar").classList.add("hidden");
             break;
         default:
             html = `<p>Unknown section.</p>`;
+            content.innerHTML = html;
+            document.getElementById("settings-content").classList.add("active");
+            document.getElementById("settings-sidebar").classList.add("hidden");
     }
-
-    content.innerHTML = html;
 }
 
 function closeContent() {
-    document.getElementById("settings-content").classList.remove("active")
-    document.getElementById("settings-sidebar").classList.remove("hidden")
+    document.getElementById("settings-content").classList.remove("active");
+    document.getElementById("settings-sidebar").classList.remove("hidden");
 }
