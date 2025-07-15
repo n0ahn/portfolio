@@ -13,13 +13,13 @@
         <div class="oslogo"></div>
         <p id="shutdown-text">Shutting down...</p>
     </div>
-    <div id="startup">
+    <!-- <div id="startup">
         <div class="oslogo"></div>
         <p id="startup-text">Starting...</p>
         <div class="loading-bar">
             <div class="loading-fill"></div>
         </div>
-    </div>
+    </div> -->
     <div id="shutdown-window" style="display: none;">
         <p class="alert-text">Are you sure you want to shutdown?</p>
         <button class="confirm-button" onclick="shutdown()">Yes</button>
@@ -35,13 +35,13 @@
         <button class="confirm-button" onclick="logout()">Yes</button>
         <button class="confirm-button" onclick="closeLogoutWindow()">No</button>
     </div>
-    <div id="login">
+    <!-- <div id="login">
         <div id="login-bg"></div>
         <div class="profile-picture"></div>
         <p id="username">admin</p>
         <button class="start-button" onclick="startWebsite()"><i class="fa-solid fa-arrow-right" style="color: white; font-size: 25px;"></i></button>
         <button class="power-button" onclick="openShutdownWindow()"><i class="fa-solid fa-power-off" style="color: white; font-size: 25px;"></i></button>
-    </div>       
+    </div>        -->
     <div id="app-window-container">
         <div class="app-window" id="aboutme-app">
             <div class="app-window-top-bar">
@@ -101,14 +101,15 @@
             <div id="settings-content-container">
                 <div id="settings-sidebar">
                     <span class="sidebar-text">Menu</span>
-                    <button class="sidebar-item"></button>
-                    <button class="sidebar-item"></button>
-                    <button class="sidebar-item"></button>
-                    <button class="sidebar-item"></button>
-                    <button class="sidebar-item"></button>
-                    <button class="sidebar-item"></button>
+                    <button class="sidebar-item" onclick="openContent('System')"><i class="fa-solid fa-gear"></i> &nbsp;&nbsp; General</button>
+                    <button class="sidebar-item" onclick="openContent('Display')"><i class="fa-solid fa-display"></i> &nbsp;&nbsp; Display</button>
+                    <button class="sidebar-item" onclick="openContent('Sound')"><i class="fa-solid fa-volume-high"></i> &nbsp;&nbsp; Sound</button>
+                    <button class="sidebar-item" onclick="openContent('Network')"><i class="fa-solid fa-globe"></i> &nbsp;&nbsp; Network</button>
+                    <button class="sidebar-item" onclick="openContent('Updates')"><i class="fa-solid fa-download"></i> &nbsp;&nbsp; Updates</button>
+                    <button class="sidebar-item" onclick="openContent('About')"><i class="fa-solid fa-address-card"></i> &nbsp;&nbsp; About</button>
+
                 </div>
-                <div id="settings-content">Content</div>
+                <div id="settings-content"></div>
             </div>
         </div>
     </div>

@@ -188,3 +188,88 @@ document.addEventListener('keydown', (event) => {
         }
     }
 });
+
+
+function openContent(section) {
+    const content = document.getElementById('settings-content');
+
+    let html = '';
+
+    switch (section) {
+        case 'Display':
+            html = `
+                <div class="settings-top-bar">
+                    <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
+                    <h2 class="content-title"><i class="fa-solid fa-display"></i> &nbsp; Display Settings</h2>
+                </div>
+                <p class="settings-content-text">Content</p>
+            `;
+            document.getElementById("settings-content").classList.add("active")
+            document.getElementById("settings-sidebar").classList.add("hidden")
+            break;
+        case 'Sound':
+            html = `
+                <div class="settings-top-bar">
+                    <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
+                    <h2 class="content-title"><i class="fa-solid fa-volume-low"></i> &nbsp; Sound Settings</h2>
+                </div>
+                 <p class="settings-content-text">Content</p>
+            `;
+            document.getElementById("settings-content").classList.add("active")
+            document.getElementById("settings-sidebar").classList.add("hidden")
+            break;
+        case 'Network':
+            html = `
+                <div class="settings-top-bar">
+                    <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
+                    <h2 class="content-title"><i class="fa-solid fa-globe"></i> &nbsp; Network Settings</h2>
+                </div>
+                 <p class="settings-content-text">Content</p>
+            `;
+            document.getElementById("settings-content").classList.add("active")
+            document.getElementById("settings-sidebar").classList.add("hidden")
+            break;
+        case 'Updates':
+            html = `
+                <div class="settings-top-bar">
+                    <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
+                    <h2 class="content-title"><i class="fa-solid fa-download"></i> &nbsp; Updates</h2>
+                </div>
+                <p class="settings-content-text">Content</p>
+            `;
+            document.getElementById("settings-content").classList.add("active")
+            document.getElementById("settings-sidebar").classList.add("hidden")
+            break;
+        case 'About':
+            html = `
+                <div class="settings-top-bar">
+                    <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
+                    <h2 class="content-title"><i class="fa-solid fa-address-book"></i> &nbsp; About</h2>
+                </div>
+                 <p class="settings-content-text">Content</p>
+            `;
+            document.getElementById("settings-content").classList.add("active")
+            document.getElementById("settings-sidebar").classList.add("hidden")
+            break;
+        case 'System':
+            html = `
+                <div class="settings-top-bar">
+                    <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
+                    <h2 class="content-title"><i class="fa-solid fa-gear"></i> &nbsp; General</h2>
+                </div>
+                 <p class="settings-content-text">Content</p>
+            `;
+            document.getElementById("settings-content").classList.add("active")
+            document.getElementById("settings-sidebar").classList.add("hidden")
+            break;
+        default:
+            html = `<p>Unknown section.</p>`;
+    }
+
+    content.innerHTML = html;
+}
+
+function closeContent() {
+    document.getElementById("settings-content").classList.remove("active")
+    document.getElementById("settings-sidebar").classList.remove("hidden")
+}
