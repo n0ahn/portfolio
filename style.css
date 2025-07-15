@@ -139,6 +139,7 @@ body {
     font-weight: 500;
     color: var(--clr-white);
     margin-bottom: 30px;
+    transition: all 0.3s ease;
 }
 
 .settings-content-text {
@@ -671,6 +672,16 @@ input:checked + .slider {
     .app {
         width: 90px;
         height: 100px;
+    }
+
+    .fullscreen-button {
+        display: none;
+    }
+
+    .app-window {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 0 !important;
     }
 
     .icon {
