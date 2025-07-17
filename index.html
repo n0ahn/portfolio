@@ -14,7 +14,7 @@
         <div class="oslogo"></div>
         <p id="shutdown-text">Shutting down...</p>
     </div>
-    <div id="startup">
+    <!-- <div id="startup">
         <div class="oslogo"></div>
         <p id="startup-text">Starting...</p>
         <div class="loading-bar">
@@ -27,7 +27,7 @@
         <p id="username">admin</p>
         <button class="start-button" onclick="startWebsite()"><i class="fa-solid fa-arrow-right" style="color: white; font-size: 25px;"></i></button>
         <button class="power-button" onclick="openShutdownWindow()"><i class="fa-solid fa-power-off" style="color: white; font-size: 25px;"></i></button>
-    </div>
+    </div> -->
     <div id="desktop">
         <div id="shutdown-window" style="display: none;">
             <p class="alert-text">Are you sure you want to shutdown?</p>
@@ -119,7 +119,7 @@
             <div class="logo-large"></div>
             <div class="top-bar">
                 <div class="infobox">
-                    <i class="fa-solid fa-battery-three-quarters top-bar-text"></i>
+                    <i class="fa-solid fa-battery-three-quarters top-bar-text" id="battery-icon"></i>
                     <div class="hideicon"><p id="battery" class="top-bar-text">67%</p></div>
                     <i class="fa-solid fa-wifi top-bar-text"></i>
                 </div>
@@ -190,7 +190,7 @@
                     <button class="tb-icon" id="websites-sm" onclick="openApp('websites-app')"></button>
                     <button class="tb-icon" id="gallery-sm" onclick="openApp('gallery-app')"></button>
                     <a class="tb-icon" id="github-sm" href="https://github.com/noahniemeijer" target="_blank"></a>
-                    <button class="tb-icon" id="contact-sm" onclick="openApp('contact-app')"></a>
+                    <button class="tb-icon" id="contact-sm" onclick="openApp('contact-app')"></button>
                 </div>
             </div>
         </div>

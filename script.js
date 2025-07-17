@@ -1,3 +1,10 @@
+let savedBrightness = 100;
+let savedContrast = 50;
+let savedSaturation = 100;
+let savedFunmode = false;
+let savedBatterylevel = 67;
+
+
 const startupElement = document.getElementById("startup");
 
 if (startupElement && startupElement.style.display !== "none") {
@@ -214,7 +221,7 @@ function openContent(section) {
                     <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
                     <h2 class="content-title"><i class="fa-solid fa-display"></i> &nbsp; Display Settings</h2>
                 </div>
-                <div class="input-field">
+                <div class="input-field" id="funmode-switch">
                     <label class="switch">
                         <input type="checkbox" id="funmode">
                         <span class="slider"></span>
@@ -223,14 +230,20 @@ function openContent(section) {
                 </div>
                 <p class="settings-content-text">Brightness:</p>
                 <div class="input-field">
-                    <input class="settings-content-input" type="range" id="brightness" name="brightness" min="10" max="100" value="100">
-                    <span class="settings-content-text" id="brightness-value">100</span>
+                    <input class="settings-content-range" type="range" id="brightness" name="brightness" min="10" max="100">
+                    <span class="settings-content-text" id="brightness-value"></span>
                 </div>
                 <p class="settings-content-text">Contrast:</p>
                 <div class="input-field">
-                    <input class="settings-content-input" type="range" id="contrast" name="contrast" min="10" max="100" value="50">
-                    <span class="settings-content-text" id="contrast-value">50</span>
+                    <input class="settings-content-range" type="range" id="contrast" name="contrast" min="10" max="100">
+                    <span class="settings-content-text" id="contrast-value"></span>
                 </div>
+                <p class="settings-content-text">Saturation:</p>
+                <div class="input-field">
+                    <input class="settings-content-range" type="range" id="saturation" name="saturation" min="0" max="100">
+                    <span class="settings-content-text" id="saturation-value"></span>
+                </div>
+                <button onclick="resetToDefaultDisplay()" class="reset-button">Reset to default settings</button>
            `;
             content.innerHTML = html;
 
@@ -242,42 +255,77 @@ function openContent(section) {
             const brightnessValue = document.getElementById('brightness-value');
             const contrast = document.getElementById('contrast');
             const contrastValue = document.getElementById('contrast-value');
+            const saturation = document.getElementById('saturation');
+            const saturationValue = document.getElementById('saturation-value');
             const desktop = document.getElementById('desktop');
 
+            if (savedFunmode) {
+                brightness.max = 500;
+                contrast.max = 250;
+            } else {
+                brightness.max = 100;
+                contrast.max = 100;
+            }
+
+            brightness.value = savedBrightness;
+            contrast.value = savedContrast;
+            saturation.value = savedSaturation;
+            funmode.checked = savedFunmode;
+
+            brightnessValue.textContent = brightness.value;
+            contrastValue.textContent = contrast.value;
+            saturationValue.textContent = saturation.value;
+
             function updateFilters() {
-                const brightnessVal = brightness.value / 100;
-                const contrastVal = contrast.value / 50;
-                desktop.style.filter = `brightness(${brightnessVal}) contrast(${contrastVal})`;
+                const brightnessVal = Number(brightness.value) / 100;
+                const contrastVal = Number(contrast.value) / 50;
+                const saturationVal = 100 - Number(saturation.value);
+                desktop.style.filter = `brightness(${brightnessVal}) contrast(${contrastVal}) grayscale(${saturationVal}%)`;
+                console.log('Updated filters:', {
+                    brightnessVal,
+                    contrastVal,
+                    saturationVal,
+                    filterString: desktop.style.filter
+                });
             }
 
             brightness.addEventListener('input', () => {
+                savedBrightness = Number(brightness.value);
                 brightnessValue.textContent = brightness.value;
                 updateFilters();
             });
 
             contrast.addEventListener('input', () => {
+                savedContrast = Number(contrast.value);
                 contrastValue.textContent = contrast.value;
                 updateFilters();
             });
 
+            saturation.addEventListener('input', () => {
+                savedSaturation = Number(saturation.value);
+                saturationValue.textContent = saturation.value;
+                updateFilters();
+            });
+
             funmode.addEventListener('change', () => {
-                if (funmode.checked) {
+                savedFunmode = funmode.checked;
+                if (savedFunmode) {
                     brightness.max = 500;
                     contrast.max = 250;
-
-                    brightness.value = 100;
-                    contrast.value = 50;
                 } else {
                     brightness.max = 100;
                     contrast.max = 100;
 
-                    if (brightness.value > 99) brightness.value = 100;
-                    if (contrast.value > 49) contrast.value = 50;
+                    if (Number(brightness.value) > 99) brightness.value = 100;
+                    if (Number(contrast.value) > 99) contrast.value = 50;
                 }
                 brightnessValue.textContent = brightness.value;
                 contrastValue.textContent = contrast.value;
                 updateFilters();
             });
+
+            updateFilters();
+
             break;
         case 'Battery':
             html = `
@@ -285,11 +333,57 @@ function openContent(section) {
                     <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
                     <h2 class="content-title"><i class="fa-solid fa-battery-three-quarters"></i> &nbsp; Battery Settings</h2>
                 </div>
-                 <p class="settings-content-text">Content</p>
+                <p class="settings-content-text" id="battery-level-text">Battery level:</p>
+                <div class="input-field">
+                    <input class="settings-content-number" type="number" id="battery-level" name="brightness" min="1" max="100">
+                    <p class="settings-content-text" id="battery-percentage">%</p>
+                </div>
+                <button onclick="resetToDefaultBattery()" class="reset-button">Reset to default settings</button>
             `;
             content.innerHTML = html;
             document.getElementById("settings-content").classList.add("active");
             document.getElementById("settings-sidebar").classList.add("hidden");
+            
+
+            const batteryLevel = document.getElementById("battery-level");
+            const batteryText = document.getElementById("battery");
+            const batteryIcon = document.getElementById("battery-icon");
+            level = savedBatterylevel;
+            batteryLevel.value = level;
+            batteryLevel.addEventListener('input', () => {
+                let level = Number(batteryLevel.value);
+                if (level < 0) {
+                    level = 0
+                } else if (level > 100) {
+                    level = 100
+                }
+
+                batteryLevel.value = level
+                batteryText.innerHTML = `${level}%`;
+
+                savedBatterylevel = level
+
+                batteryIcon.classList.remove(
+                    "fa-battery-empty",
+                    "fa-battery-quarter",
+                    "fa-battery-half",
+                    "fa-battery-three-quarters",
+                    "fa-battery-full"
+                );
+
+                if (level < 2) {
+                    batteryIcon.classList.add("fa-battery-empty");
+                } else if (level < 30) {
+                    batteryIcon.classList.add("fa-battery-quarter");
+                } else if (level < 60) {
+                    batteryIcon.classList.add("fa-battery-half");
+                } else if (level < 90) {
+                    batteryIcon.classList.add("fa-battery-three-quarters");
+                } else {
+                    batteryIcon.classList.add("fa-battery-full");
+                }
+            });
+
             break;
         case 'Network':
             html = `
@@ -297,7 +391,6 @@ function openContent(section) {
                     <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
                     <h2 class="content-title"><i class="fa-solid fa-globe"></i> &nbsp; Network Settings</h2>
                 </div>
-                <p class="settings-content-text">Content</p>
             `;
             content.innerHTML = html;
             document.getElementById("settings-content").classList.add("active");
@@ -333,4 +426,44 @@ function openContent(section) {
 function closeContent() {
     document.getElementById("settings-content").classList.remove("active");
     document.getElementById("settings-sidebar").classList.remove("hidden");
+}
+
+function resetToDefaultDisplay() {
+    const brightness = document.getElementById('brightness');
+    const contrast = document.getElementById('contrast');
+    const saturation = document.getElementById('saturation');
+    const brightnessValue = document.getElementById('brightness-value');
+    const contrastValue = document.getElementById('contrast-value');
+    const saturationValue = document.getElementById('saturation-value');
+    const desktop = document.getElementById('desktop');
+
+    brightness.value = 100;
+    contrast.value = 50;
+    saturation.value = 100;
+
+    brightnessValue.textContent = "100";
+    contrastValue.textContent = "50";
+    saturationValue.textContent = "100";
+
+    savedBrightness = 100;
+    savedContrast = 50;
+    savedSaturation = 100;
+
+    desktop.style.filter = `brightness(1) contrast(1) grayscale(0)`;
+}
+
+function resetToDefaultBattery() {
+    const batteryLevel = document.getElementById("battery-level");
+    const batteryIcon = document.getElementById("battery-icon");
+    const battery = document.getElementById("battery");
+    batteryIcon.classList.remove(
+        "fa-battery-empty",
+        "fa-battery-quarter",
+        "fa-battery-half",
+        "fa-battery-full"
+    );
+    batteryIcon.classList.add("fa-battery-three-quarters");
+    savedBatterylevel = 67;
+    batteryLevel.value = 67;
+    battery.textContent = '67%';
 }
