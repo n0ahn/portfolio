@@ -1,6 +1,7 @@
 /* Fonts */
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800&display=swap');
 :root {
+    --vh: 1vh;
     /* Primary Colors */
     --clr-dark-blue: #0C1428;
     --clr-dark-blue-alt: #1b2230;
@@ -32,7 +33,7 @@
 html {
     background: var(--clr-dark-blue);
     width: 100%;
-    height: 100%;
+    height: calc(var(--vh, 1vh) * 100);
     overflow-x: hidden;
       overflow-y: auto;
     filter: brightness(1);
@@ -41,7 +42,7 @@ html {
 body {
     margin: 0;
     width: 100%;
-    height: 100%;
+    height: calc(var(--vh, 1vh) * 100);
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -49,7 +50,7 @@ body {
 #desktop {
     position: relative;
     width: 100vw;
-    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
     overflow: hidden;
     filter: brightness(1); /* standaard helderheid */
 }
