@@ -195,6 +195,14 @@
             </div>
         </div>
     </div>
+    <script>
+      function setVh() {
+        document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+      }
+      window.addEventListener('resize', setVh);
+      window.addEventListener('orientationchange', setVh);
+      setVh();
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
