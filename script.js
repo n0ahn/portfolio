@@ -184,7 +184,10 @@ function closeApp(appId) {
 
 function toggleFullscreen(appId) {
     const app = document.getElementById(appId);
+    const button = document.querySelector('.close-button');
     app.classList.toggle('fullscreen');
+    button.classList.add('fullscreen');
+    
 
     const icon = app.querySelector('.fullscreen-button i');
     if (app.classList.contains('fullscreen')) {
@@ -253,7 +256,7 @@ function openContent(section) {
                     <input class="settings-content-range" type="range" id="contrast" name="contrast" min="10" max="100">
                     <span class="app-content-text" id="contrast-value"></span>
                 </div>
-                <p class="settappings-content-text">Saturation:</p>
+                <p class="app-content-text">Saturation:</p>
                 <div class="input-field">
                     <input class="settings-content-range" type="range" id="saturation" name="saturation" min="0" max="100">
                     <span class="app-content-text" id="saturation-value"></span>
@@ -481,12 +484,28 @@ function openContent(section) {
                     <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
                     <h2 class="content-title"><i class="fa-solid fa-download"></i> &nbsp; Updates</h2>
                 </div>
-                <p class="app-content-text">Content</p>
+                <div id="update-info">
+                    <p class="app-content-text" style="margin: 0;"><b>Version:</b> NoahOS <span id="os-version">–</span></p>
+                    <p class="app-content-text" style="margin: 0;"><b>Type:</b> <span id="os-type">–</span></p>
+                    <p class="app-content-text" style="margin: 0;"><b>Changes:</b> <span id="os-notes">–</span></p>
+                </div>
+                <div id="commit-info">
+                    <p class="app-content-text" style="margin: 0;"><b style="font-weight: 1000;">Latest commit:</b></p>
+                    <p class="app-content-text" style="margin: 0; margin-left: 20px;"><strong>Message:</strong> <span id="commit-message">–</span></p>
+                    <p class="app-content-text" style="margin: 0; margin-left: 20px;"><strong>Date:</strong> <span id="commit-date">–</span></p>
+                </div>
+
+                <button style="margin-bottom: 20px; margin-left: 30px;" onclick="checkForUpdates()" class="reset-button">🔁 Check for Updates</button>
+                <p style="margin-left: 30px;" class="app-content-text">Last checked: <span id="last-checked">Never</span></p>
             `;
             content.innerHTML = html;
             document.getElementById("settings-content").classList.add("active");
             document.getElementById("settings-sidebar").classList.add("hidden");
+
+            checkForUpdates();
             break;
+
+
         case 'About':
             html = `
                 <div class="settings-top-bar">
@@ -559,4 +578,29 @@ function resetToDefaultNetwork() {
 
     internetIcon.classList.remove("fa-wifi", "fa-ethernet", "fa-plane-up");
     internetIcon.classList.add("fa-wifi");
+}
+
+async function checkForUpdates() {
+    try {
+        const versionRes = await fetch('./version.json');
+        const versionData = await versionRes.json();
+
+        document.getElementById('os-version').textContent = versionData.version;
+        document.getElementById('os-type').textContent = versionData.type;
+        document.getElementById('os-notes').textContent = versionData.notes;
+
+        const commitsRes = await fetch('https://api.github.com/repos/noahniemeijer/portfolio/commits');
+        const commits = await commitsRes.json();
+        const latestCommit = commits[0];
+
+        document.getElementById('commit-message').textContent = latestCommit.commit.message;
+        document.getElementById('commit-date').textContent = new Date(latestCommit.commit.author.date).toLocaleString();
+
+        const now = new Date();
+        document.getElementById('last-checked').textContent = now.toLocaleString();
+
+    } catch (err) {
+        document.querySelector('.updates-tab').innerHTML = "<p>❌ Failed to fetch update info</p>";
+        console.error('Update check failed:', err);
+    }
 }

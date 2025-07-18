@@ -60,7 +60,8 @@ body {
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
-            align-items: center;
+            /* Remove or change align-items to flex-start */
+            align-items: flex-start; /* Change this from center to flex-start */
             max-width: 100%;
             width: 100%;
             height: 100%;
@@ -119,10 +120,12 @@ body {
         }
 
         #settings-content {
-            display: none;
+            display: none; /* (or flex when active) */
             flex: 1;
             background: var(--clr-dark-blue-alt);
-            height: 100%;
+            /* Set a fixed or maximum height if flex: 1 alone isn't constraining it enough */
+            /* If height: 100% is crucial, ensure its parent has a defined height it can derive from */
+            height: 100%; /* Keep this, but ensure parent alignment allows it to fill */
             border-radius: 25px;
             margin: 0;
             flex-direction: column;
@@ -131,6 +134,8 @@ body {
             padding-left: 30px;
             padding-right: 30px;
             animation: open 0.3s;
+            overflow-y: scroll;
+            box-sizing: border-box; /* Add this to account for padding in height calculation */
         }
 
         .settings-top-bar {
@@ -140,6 +145,7 @@ body {
             justify-content: flex-start;
             width: 100%;
             gap: 20px;
+            margin-bottom: 20px;
         }
 
         .content-title {
@@ -147,7 +153,6 @@ body {
             font-family: "M PLUS Rounded 1c", sans-serif;
             font-weight: 500;
             color: var(--clr-white);
-            margin-bottom: 30px;
             transition: all 0.3s ease;
         }
 
@@ -187,6 +192,14 @@ body {
         input[type=number]::-webkit-outer-spin-button {
             -webkit-appearance: none;
             margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        input[type=number] {
+            appearance: textfield;
         }
 
         .settings-content-number:focus {
@@ -325,6 +338,31 @@ body {
 
         #network-select:focus {
             outline: 2px solid var(--clr-app-outline);
+        }
+
+        #update-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: var(--clr-app-button);
+            padding: 20px;
+            width: auto;
+            margin-left: 20px;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            margin-right: 20px !important;
+        }
+
+        #commit-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: var(--clr-app-button);
+            padding: 20px;
+            width: auto;
+            margin-left: 20px;
+            border-radius: 20px;
+            margin-right: 20px !important;
         }
 
 
@@ -683,8 +721,8 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    width: 80%;
-    height: 80%;
+    width: 80vw;
+    height: 80vh;
     background-color: #090f1b; /* This color is unique and not merged as requested */
     border-radius: 25px;
     transform: translateY(100%) perspective(200px) rotateX(15deg);
@@ -705,7 +743,7 @@ body {
 
 .app-window-top-bar {
     width: 100%;
-    height: 8%;
+    height: 6vh !important;
     border-top-right-radius: 25px;
     border-top-left-radius: 25px;
     background-color: var(--clr-black-alpha-30);
@@ -722,7 +760,7 @@ body {
 
 .app-title {
     position: absolute;
-    font-size: 20px;
+    font-size: 3vh;
     font-family: "M PLUS Rounded 1c", sans-serif;
     font-weight: 500;
     color: var(--clr-white);
@@ -738,6 +776,10 @@ body {
     justify-content: center;
     align-items: center;
     display: flex;
+}
+
+.fullscreen .close-button  {
+    border-top-right-radius: 0px !important;
 }
 
 .close-button:hover {
@@ -931,6 +973,7 @@ body {
         #settings-content {
             display: none;
             width: 100%;
+            max-height: 85.5vh !important;
         }
 
         #settings-content.active {
@@ -939,7 +982,7 @@ body {
         }
 
         .back-button {
-            height: 50%;
+            height: 35px;
             aspect-ratio: 1;
             border: none;
             border-radius: 50%;
@@ -952,6 +995,10 @@ body {
             transform: scale(1.1);
             filter: brightness(1.2);
             box-shadow: 0 6px 16px var(--clr-black-alpha-50);
+        }
+
+        .content-title {
+            font-size: 17px;
         }
 }
 
