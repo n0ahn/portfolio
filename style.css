@@ -151,7 +151,7 @@ body {
             transition: all 0.3s ease;
         }
 
-        .settings-content-text {
+        .app-content-text {
             font-family: "M PLUS Rounded 1c", sans-serif;
             font-weight: 500;
             color: var(--clr-white);
@@ -292,24 +292,49 @@ body {
             margin-bottom: 5px;
         }
 
-        #speedtest-window {
-            position: relative;
-            width: 100%;        /* or fixed size if you want */
-            height: 400px;      /* adjust height as needed */
-            background: transparent;  /* no background */
-            border: none;       /* no border */
-            box-shadow: 0 0 10px rgba(0,0,0,0.1); /* subtle shadow */
-            border-radius: 8px;
-            overflow: hidden;
-            }
+        #airplane-mode-switch {
+            height: 25px;
+            margin-bottom: 20px;
+        }
 
-            #speedtest-iframe {
-            width: 100%;
-            height: 100%;
-            background: transparent;
+        #network-select {
+            -webkit-appearance: none; 
+            -moz-appearance: none; 
+            appearance: none;  
+            margin-left: 20px;
+            margin-bottom: 20px;
             border: none;
-            }
+            padding-left: 10px;
+            border-radius: 50px;
+            height: 30px;
+            width: 90px;
+            font-size: 14px;
+            color: white;
+            font-family: "M PLUS Rounded 1c", sans-serif;
+            font-weight: 500;
+            background-color: var(--clr-app-button);
+            outline: solid 1px var(--clr-app-button);
+            transition: all 0.2s ease;
+        }
 
+        #network-select:hover {
+            transform: scale(1.1);
+            filter: brightness(1.1);
+            cursor: pointer;
+        }
+
+        #network-select:focus {
+            outline: 2px solid var(--clr-app-outline);
+        }
+
+
+#no-connection {
+    font-size: 25px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
 
 #shutdown {
     position: fixed;

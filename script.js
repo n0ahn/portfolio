@@ -2,8 +2,8 @@ let savedBrightness = 100;
 let savedContrast = 50;
 let savedSaturation = 100;
 let savedFunmode = false;
+let savedAirplanemode = false;
 let savedBatterylevel = 67;
-
 
 const startupElement = document.getElementById("startup");
 
@@ -151,7 +151,22 @@ function openApp(appId) {
         container.classList.add("visible");
         app.classList.add("active");
     }, 10);
+
+    if (appId !== 'settings-app') {
+        const appContent = app.querySelector(".app-window-content");
+
+        if (!appContent.dataset.originalContent) {
+            appContent.dataset.originalContent = appContent.innerHTML;
+        }
+
+        if (savedAirplanemode) {
+            appContent.innerHTML = '<p class="app-content-text" id="no-connection">No Internet Connection</p>';
+        } else {
+            appContent.innerHTML = appContent.dataset.originalContent;
+        }
+    }
 }
+
 
 function closeApp(appId) {
     const container = document.getElementById("app-window-container");
@@ -209,7 +224,7 @@ function openContent(section) {
                     <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
                     <h2 class="content-title"><i class="fa-solid fa-gear"></i> &nbsp; General Settings</h2>
                 </div>
-                <p class="settings-content-text">Content</p>
+                <p class="app-content-text">Content</p>
             `;
             content.innerHTML = html;
             document.getElementById("settings-content").classList.add("active");
@@ -226,22 +241,22 @@ function openContent(section) {
                         <input type="checkbox" id="funmode">
                         <span class="slider"></span>
                     </label>
-                    <span class="settings-content-text">Fun Mode</span>
+                    <span class="app-content-text">Fun Mode</span>
                 </div>
-                <p class="settings-content-text">Brightness:</p>
+                <p class="app-content-text">Brightness:</p>
                 <div class="input-field">
                     <input class="settings-content-range" type="range" id="brightness" name="brightness" min="10" max="100">
-                    <span class="settings-content-text" id="brightness-value"></span>
+                    <span class="app-content-text" id="brightness-value"></span>
                 </div>
-                <p class="settings-content-text">Contrast:</p>
+                <p class="app-content-text">Contrast:</p>
                 <div class="input-field">
                     <input class="settings-content-range" type="range" id="contrast" name="contrast" min="10" max="100">
-                    <span class="settings-content-text" id="contrast-value"></span>
+                    <span class="app-content-text" id="contrast-value"></span>
                 </div>
-                <p class="settings-content-text">Saturation:</p>
+                <p class="settappings-content-text">Saturation:</p>
                 <div class="input-field">
                     <input class="settings-content-range" type="range" id="saturation" name="saturation" min="0" max="100">
-                    <span class="settings-content-text" id="saturation-value"></span>
+                    <span class="app-content-text" id="saturation-value"></span>
                 </div>
                 <button onclick="resetToDefaultDisplay()" class="reset-button">Reset to default settings</button>
            `;
@@ -333,10 +348,10 @@ function openContent(section) {
                     <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
                     <h2 class="content-title"><i class="fa-solid fa-battery-three-quarters"></i> &nbsp; Battery Settings</h2>
                 </div>
-                <p class="settings-content-text" id="battery-level-text">Battery level:</p>
+                <p class="app-content-text" id="battery-level-text">Battery level:</p>
                 <div class="input-field">
                     <input class="settings-content-number" type="number" id="battery-level" name="brightness" min="1" max="100">
-                    <p class="settings-content-text" id="battery-percentage">%</p>
+                    <p class="app-content-text" id="battery-percentage">%</p>
                 </div>
                 <button onclick="resetToDefaultBattery()" class="reset-button">Reset to default settings</button>
             `;
@@ -391,10 +406,74 @@ function openContent(section) {
                     <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
                     <h2 class="content-title"><i class="fa-solid fa-globe"></i> &nbsp; Network Settings</h2>
                 </div>
+                <p class="app-content-text">Airplane mode:</p>
+                <label class="switch" id="airplane-mode-switch">
+                    <input type="checkbox" id="airplane-mode">
+                    <span class="slider"></span>
+                </label>
+                <p class="app-content-text">Network Type:</p>
+                <select id="network-select">
+                    <option value="wifi">Wifi</option>
+                    <option value="ethernet">Ethernet</option>
+                </select>
+                <p class="app-content-text">Public IP:</p>
+                <span class="app-content-text" id="user-ip">X.X.X.X</span>
+
+                <button onclick="resetToDefaultNetwork()" class="reset-button">Reset to default settings</button>
             `;
             content.innerHTML = html;
             document.getElementById("settings-content").classList.add("active");
             document.getElementById("settings-sidebar").classList.add("hidden");
+            
+            const airplaneModeToggle = document.getElementById("airplane-mode");
+            const internetIcon = document.getElementById("wifi-icon");
+            const networkSelect = document.getElementById("network-select");
+            airplaneModeToggle.checked = savedAirplanemode;
+            let selectedNetwork = networkSelect.value;
+
+            airplaneModeToggle.addEventListener('input', () => {
+                savedAirplanemode = airplaneModeToggle.checked;
+
+                if (savedAirplanemode) {
+                    internetIcon.classList.remove("fa-wifi", "fa-ethernet");
+                    internetIcon.classList.add("fa-plane-up");
+                } else {
+                    updateNetworkIcon(selectedNetwork);
+                }
+            });
+
+            networkSelect.addEventListener('change', (event) => {
+                selectedNetwork = event.target.value;
+
+                if (!savedAirplanemode) {
+                    updateNetworkIcon(selectedNetwork);
+                }
+            });
+
+            function updateNetworkIcon(networkType) {
+                internetIcon.classList.remove("fa-wifi", "fa-ethernet", "fa-plane-up");
+
+                if (networkType === "wifi") {
+                    internetIcon.classList.add("fa-wifi");
+                } else if (networkType === "ethernet") {
+                    internetIcon.classList.add("fa-ethernet");
+                }
+            }
+
+            async function setUserPublicIP() {
+                try {
+                    const response = await fetch('https://api.ipify.org?format=json');
+                    if (!response.ok) throw new Error('Netwerkfout bij IP ophalen');
+                    const data = await response.json();
+                    const userIpElement = document.getElementById('user-ip');
+                    if (userIpElement) {
+                        userIpElement.textContent = data.ip;
+                    }
+                } catch (error) {
+                    console.error('Fout bij ophalen van publiek IP:', error);
+                }
+            }
+            setUserPublicIP()
             break;
         case 'Updates':
             html = `
@@ -402,7 +481,7 @@ function openContent(section) {
                     <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
                     <h2 class="content-title"><i class="fa-solid fa-download"></i> &nbsp; Updates</h2>
                 </div>
-                <p class="settings-content-text">Content</p>
+                <p class="app-content-text">Content</p>
             `;
             content.innerHTML = html;
             document.getElementById("settings-content").classList.add("active");
@@ -414,7 +493,7 @@ function openContent(section) {
                     <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
                     <h2 class="content-title"><i class="fa-solid fa-circle-info"></i> &nbsp; About this website</h2>
                 </div>
-                <p class="settings-content-text">Content</p>
+                <p class="app-content-text">Content</p>
             `;
             content.innerHTML = html;
             document.getElementById("settings-content").classList.add("active");
@@ -466,4 +545,18 @@ function resetToDefaultBattery() {
     savedBatterylevel = 67;
     batteryLevel.value = 67;
     battery.textContent = '67%';
+}
+
+function resetToDefaultNetwork() {
+    const networkSelect = document.getElementById("network-select");
+    const internetIcon = document.getElementById("wifi-icon");
+    const airplaneModeToggle = document.getElementById("airplane-mode");
+    airplaneModeToggle.checked = false;
+    savedAirplanemode = false;
+
+    selectedNetwork = "wifi";
+    networkSelect.value = "wifi";
+
+    internetIcon.classList.remove("fa-wifi", "fa-ethernet", "fa-plane-up");
+    internetIcon.classList.add("fa-wifi");
 }
