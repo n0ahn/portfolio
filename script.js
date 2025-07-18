@@ -4,6 +4,68 @@ let savedSaturation = 100;
 let savedFunmode = false;
 let savedAirplanemode = false;
 let savedBatterylevel = 67;
+let savedBackground = "wall";
+let savedOSLogo = false;
+let savedTheme = "dark"
+
+const darkThemeColors = {
+    '--color-background-primary': '#0C1428',
+    '--color-background-secondary': '#182036',
+    '--color-accent-primary': '#4c63af',
+
+    '--color-text-primary': '#FFFFFF',
+    '--color-text-secondary': '#FFFFFF',
+    '--color-text-danger': 'rgba(87, 0, 0, 1)',
+
+    '--color-background-overlay-dark': 'rgba(0,0,0,0.5)',
+    '--color-background-overlay-medium': 'rgba(0,0,0,0.4)',
+    '--color-background-overlay-light': 'rgba(0,0,0,0.2)',
+    '--color-background-overlay-slight': 'rgba(0,0,0,0.3)',
+    '--color-background-dark-alpha': '#090f1bd4',
+    '--color-background-app-button': '#3f495ebd',
+    '--color-background-app-info': '#3f495ebd',
+    '--color-background-shutdown': '#000000',
+
+    '--color-border-primary': '#ccc',
+    '--color-border-secondary': '#465168',
+    '--color-border-profile': '#313a50'
+};
+
+const lightThemeColors = {
+    '--color-background-primary': '#eff1f5',
+    '--color-background-secondary': '#e6e9ef',
+    '--color-accent-primary': '#7287fd',
+
+    '--color-text-primary': '#4c4f69',
+    '--color-text-secondary': '#000000',
+    '--color-text-danger': '#d20f39',
+
+    '--color-background-overlay-dark': 'rgba(236, 239, 244, 0.5)',
+    '--color-background-overlay-medium': 'rgba(236, 239, 244, 0.4)',
+    '--color-background-overlay-light': 'rgba(236, 239, 244, 0.2)',
+    '--color-background-overlay-slight': 'rgba(236, 239, 244, 0.3)',
+    '--color-background-dark-alpha': '#ffffffd4',
+
+    '--color-background-app-button': '#ccd0da',
+    '--color-background-app-info': '#bcc0cc',
+    '--color-background-shutdown': '#dce0e8', 
+
+    '--color-border-primary': '#acb0be',
+    '--color-border-secondary': '#9ca0b0',
+    '--color-border-profile': '#ccd0da'
+};
+
+
+
+function applyTheme(themeName) {
+    const root = document.documentElement; // Dit verwijst naar het <html> element (CSS :root)
+    const colorsToApply = themeName === 'dark' ? darkThemeColors : lightThemeColors;
+
+    for (const [property, value] of Object.entries(colorsToApply)) {
+        root.style.setProperty(property, value);
+    }
+    savedTheme = themeName;
+}
 
 const startupElement = document.getElementById("startup");
 
@@ -229,11 +291,73 @@ function openContent(section) {
                     <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
                     <h2 class="content-title"><i class="fa-solid fa-gear"></i> &nbsp; General Settings</h2>
                 </div>
-                <p class="app-content-text">Content</p>
+                <p class="app-content-text">Theme:</p>
+                <select id="theme-select">
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                </select>
+                <p class="app-content-text">Background:</p>
+                <select id="background-select">
+                    <option value="none">None</option>
+                    <optgroup label="Dark Theme">
+                        <option value="wall">Midnight Mountain</option>
+                        <option value="lunar-flow">Lunar Flow</option>
+                        <option value="sunset-river">Sunset River</option>
+                        <option value="snowy-mountain">Snowy Mountain</option>
+                    </optgroup>
+                    <optgroup label="Light Theme">
+                        <option value="sunrise-vulcano">Sunrise Vulcano</option>
+                        <option value="snowy-sunset">Snowy Sunset</option>
+                        <option value="sunlight-horizon">Sunlight Horizon</option>
+                        <option value="fluid-light">Fluid Light</option>
+                    </optgroup>
+                </select>
+                <p class="app-content-text">Disable OS Logo:</p>
+                <label class="switch" id="oslogo-switch">
+                    <input type="checkbox" id="oslogo">
+                    <span class="slider"></span>
+                </label>
             `;
             content.innerHTML = html;
             document.getElementById("settings-content").classList.add("active");
             document.getElementById("settings-sidebar").classList.add("hidden");
+
+            bgselect = document.getElementById("background-select");
+            bg = document.getElementById("main-content");
+            loginbg = document.getElementById("login-bg");
+            oslogoToggle = document.getElementById("oslogo");
+            oslogo = document.getElementById("logo-large");
+            oslogo.checked = savedOSLogo;
+            themeselect = document.getElementById("theme-select");
+
+            if (themeselect) { 
+                themeselect.value = savedTheme;
+                themeselect.addEventListener('change', () => {
+                    savedTheme = themeselect.value;
+                    if (savedTheme === "dark") {
+                       applyTheme("dark"); 
+                    } else if (savedTheme === "light") {
+                       applyTheme("light");
+                    }
+                });
+            }
+
+
+            bgselect.addEventListener('change', () => {
+                savedBackground = bgselect.value;
+                if (savedBackground === "none") {
+                    bg.style.backgroundImage = "none"
+                } else {
+                    bg.style.backgroundImage = `url('assets/${savedBackground}.jpg')`
+                    loginbg.style.backgroundImage = `url('assets/${savedBackground}.jpg')`
+                }
+            });
+            oslogoToggle.addEventListener('change', () => {
+                savedOSLogo = oslogoToggle.checked;
+                oslogo.classList.toggle("hidden");
+            });
+            oslogoToggle.checked = savedOSLogo;
+            bgselect.value = savedBackground;
             break;
         case 'Display':
             html = `
@@ -625,7 +749,7 @@ async function checkForUpdates() {
         document.getElementById('last-checked').textContent = now.toLocaleString();
 
     } catch (err) {
-        document.querySelector('.updates-tab').innerHTML = "<p>❌ Failed to fetch update info</p>";
+        document.querySelector('.updates-tab').innerHTML = "<p>Failed to fetch update info</p>";
         console.error('Update check failed:', err);
     }
 }
