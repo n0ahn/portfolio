@@ -1,12 +1,23 @@
-let savedBrightness = 100;
-let savedContrast = 50;
-let savedSaturation = 100;
-let savedFunmode = false;
-let savedAirplanemode = false;
-let savedBatterylevel = 67;
-let savedBackground = "wall";
-let savedOSLogo = false;
-let savedTheme = "dark"
+
+function saveSetting(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+}
+
+function loadSetting(key, defaultValue) {
+    const stored = localStorage.getItem(key);
+    return stored !== null ? JSON.parse(stored) : defaultValue;
+}
+
+let savedBrightness = loadSetting('brightness', 100);
+let savedContrast = loadSetting('contrast', 50);
+let savedSaturation = loadSetting('saturation', 100);
+let savedFunmode = loadSetting('funmode', false);
+let savedAirplanemode = loadSetting('airplanemode', false);
+let savedBatterylevel = loadSetting('batterylevel', 67);
+let savedBackground = loadSetting('background', "wall");
+let savedOSLogo = loadSetting('oslogo', false);
+let savedTheme = loadSetting('theme', "dark");
+
 
 const darkThemeColors = {
     '--color-background-primary': '#0C1428',
@@ -334,6 +345,7 @@ function openContent(section) {
                 themeselect.value = savedTheme;
                 themeselect.addEventListener('change', () => {
                     savedTheme = themeselect.value;
+                    saveSetting('theme', savedTheme);
                     if (savedTheme === "dark") {
                        applyTheme("dark"); 
                     } else if (savedTheme === "light") {
@@ -345,6 +357,7 @@ function openContent(section) {
 
             bgselect.addEventListener('change', () => {
                 savedBackground = bgselect.value;
+                saveSetting('background', savedBackground);
                 if (savedBackground === "none") {
                     bg.style.backgroundImage = "none"
                 } else {
@@ -354,6 +367,7 @@ function openContent(section) {
             });
             oslogoToggle.addEventListener('change', () => {
                 savedOSLogo = oslogoToggle.checked;
+                saveSetting('oslogo', savedOSLogo);
                 oslogo.classList.toggle("hidden");
             });
             oslogoToggle.checked = savedOSLogo;
@@ -435,23 +449,27 @@ function openContent(section) {
 
             brightness.addEventListener('input', () => {
                 savedBrightness = Number(brightness.value);
+                saveSetting('brightness', savedBrightness);
                 brightnessValue.textContent = brightness.value;
                 updateFilters();
             });
 
             contrast.addEventListener('input', () => {
                 savedContrast = Number(contrast.value);
+                saveSetting('contrast', savedContrast);
                 contrastValue.textContent = contrast.value;
                 updateFilters();
             });
 
             saturation.addEventListener('input', () => {
                 savedSaturation = Number(saturation.value);
+                saveSetting('saturation', savedSaturation);
                 saturationValue.textContent = saturation.value;
                 updateFilters();
             });
 
             funmode.addEventListener('change', () => {
+                saveSetting('funmode', savedFunmode);
                 savedFunmode = funmode.checked;
                 if (savedFunmode) {
                     brightness.max = 500;
@@ -506,6 +524,7 @@ function openContent(section) {
                 batteryText.innerHTML = `${level}%`;
 
                 savedBatterylevel = level
+                saveSetting('batterylevel', savedBatterylevel);
 
                 batteryIcon.classList.remove(
                     "fa-battery-empty",
@@ -562,6 +581,7 @@ function openContent(section) {
 
             airplaneModeToggle.addEventListener('input', () => {
                 savedAirplanemode = airplaneModeToggle.checked;
+                saveSetting('airplanemode', savedAirplanemode);
 
                 if (savedAirplanemode) {
                     internetIcon.classList.remove("fa-wifi", "fa-ethernet");
@@ -753,3 +773,77 @@ async function checkForUpdates() {
         console.error('Update check failed:', err);
     }
 }
+
+function applySavedSettings() {
+    // Thema toepassen
+    applyTheme(savedTheme);
+
+    // Achtergrond toepassen
+    const bg = document.getElementById("main-content");
+    const loginbg = document.getElementById("login-bg");
+    if (savedBackground === "none") {
+        bg.style.backgroundImage = "none";
+        loginbg.style.backgroundImage = "none";
+    } else {
+        bg.style.backgroundImage = `url('assets/${savedBackground}.jpg')`;
+        loginbg.style.backgroundImage = `url('assets/${savedBackground}.jpg')`;
+    }
+
+    // OS-logo
+    const oslogo = document.getElementById("logo-large");
+    if (oslogo) {
+        if (savedOSLogo) {
+            oslogo.classList.add("hidden");
+        } else {
+            oslogo.classList.remove("hidden");
+        }
+    }
+
+    // Filters toepassen
+    const desktop = document.getElementById("desktop");
+    const brightnessVal = savedBrightness / 100;
+    const contrastVal = savedContrast / 50;
+    const saturationVal = 100 - savedSaturation;
+    desktop.style.filter = `brightness(${brightnessVal}) contrast(${contrastVal}) grayscale(${saturationVal}%)`;
+
+    // Batterij
+    const battery = document.getElementById("battery");
+    const batteryIcon = document.getElementById("battery-icon");
+    if (battery && batteryIcon) {
+        battery.innerHTML = `${savedBatterylevel}%`;
+        batteryIcon.classList.remove(
+            "fa-battery-empty",
+            "fa-battery-quarter",
+            "fa-battery-half",
+            "fa-battery-three-quarters",
+            "fa-battery-full"
+        );
+        if (savedBatterylevel < 2) {
+            batteryIcon.classList.add("fa-battery-empty");
+        } else if (savedBatterylevel < 30) {
+            batteryIcon.classList.add("fa-battery-quarter");
+        } else if (savedBatterylevel < 60) {
+            batteryIcon.classList.add("fa-battery-half");
+        } else if (savedBatterylevel < 90) {
+            batteryIcon.classList.add("fa-battery-three-quarters");
+        } else {
+            batteryIcon.classList.add("fa-battery-full");
+        }
+    }
+
+    // Internet icoon
+    const wifiIcon = document.getElementById("wifi-icon");
+    if (wifiIcon) {
+        wifiIcon.classList.remove("fa-wifi", "fa-ethernet", "fa-plane-up");
+        if (savedAirplanemode) {
+            wifiIcon.classList.add("fa-plane-up");
+        } else {
+            wifiIcon.classList.add("fa-wifi");
+        }
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    applySavedSettings();
+});
+
