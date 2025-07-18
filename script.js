@@ -185,8 +185,10 @@ function closeApp(appId) {
 function toggleFullscreen(appId) {
     const app = document.getElementById(appId);
     const button = document.querySelector('.close-button');
+    const settingscontent = document.getElementById('settings-content');
     app.classList.toggle('fullscreen');
-    button.classList.add('fullscreen');
+    button.classList.toggle('fullscreen');
+    settingscontent.classList.toggle('fullscreen');
     
 
     const icon = app.querySelector('.fullscreen-button i');
@@ -352,7 +354,7 @@ function openContent(section) {
                     <h2 class="content-title"><i class="fa-solid fa-battery-three-quarters"></i> &nbsp; Battery Settings</h2>
                 </div>
                 <p class="app-content-text" id="battery-level-text">Battery level:</p>
-                <div class="input-field">
+                <div class="input-field" id="battery-input">
                     <input class="settings-content-number" type="number" id="battery-level" name="brightness" min="1" max="100">
                     <p class="app-content-text" id="battery-percentage">%</p>
                 </div>
@@ -495,7 +497,7 @@ function openContent(section) {
                     <p class="app-content-text" style="margin: 0; margin-left: 20px;"><strong>Date:</strong> <span id="commit-date">–</span></p>
                 </div>
 
-                <button style="margin-bottom: 20px; margin-left: 30px;" onclick="checkForUpdates()" class="reset-button">🔁 Check for Updates</button>
+                <button style="height: 4vh;" onclick="checkForUpdates()" class="reset-button" id="checkupdates-button">Check for Updates</button>
                 <p style="margin-left: 30px;" class="app-content-text">Last checked: <span id="last-checked">Never</span></p>
             `;
             content.innerHTML = html;
@@ -507,13 +509,36 @@ function openContent(section) {
 
 
         case 'About':
+            checkForUpdates();
             html = `
                 <div class="settings-top-bar">
                     <button onclick="closeContent()" class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
                     <h2 class="content-title"><i class="fa-solid fa-circle-info"></i> &nbsp; About this website</h2>
                 </div>
-                <p class="app-content-text">Content</p>
+                <div class="info-grid">
+                    <div class="infolabel app-content-text">Website Name:</div>
+                    <div class="infovalue app-content-text">NoahOS Portfolio</div>
+
+                    <div class="infolabel app-content-text">Version:</div>
+                    <div class="infovalue app-content-text"><span id="os-version">-</span> (<span id="os-type">-</span>)</div>
+
+                    <div class="infolabel app-content-text">Purpose:</div>
+                    <div class="infovalue app-content-text">This website is a professional portfolio designed to showcase my skills and projects through a custom OS-inspired interface.</div>
+
+                    <div class="infolabel app-content-text">Technologies:</div>
+                    <div class="infovalue app-content-text">Built using HTML5, CSS3, and modern JavaScript. Utilizes Font Awesome for icons and Google Fonts for typography. Hosted on Vercel.</div>
+
+                    <div class="infolabel app-content-text">Design:</div>
+                    <div class="infovalue app-content-text">Responsive layout, optimized for multiple device types, accessible design, taskbar, and window system.</div>
+
+                    <div class="infolabel app-content-text">Credits:</div>
+                    <div class="infovalue app-content-text">© 2025 Noah Niemeijer. All rights reserved. Third-party assets used under appropriate licenses.</div>
+
+                    <div class="infolabel app-content-text">Contact:</div>
+                    <div class="infovalue app-content-text">Please refer to the Personal Info application for contact details.</div>
+                </div>
             `;
+
             content.innerHTML = html;
             document.getElementById("settings-content").classList.add("active");
             document.getElementById("settings-sidebar").classList.add("hidden");
