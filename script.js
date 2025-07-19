@@ -761,7 +761,7 @@ function resetToDefaultNetwork() {
 
 async function checkForUpdates() {
     try {
-        const versionRes = await fetch('./version.json');
+        const versionRes = await fetch('../version.json');
         const versionData = await versionRes.json();
 
         document.getElementById('os-version').textContent = versionData.version;
