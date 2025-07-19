@@ -1,4 +1,3 @@
-
 function saveSetting(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
 }
@@ -8,7 +7,7 @@ function loadSetting(key, defaultValue) {
     return stored !== null ? JSON.parse(stored) : defaultValue;
 }
 
-let savedBrightness = loadSetting('brightness', 100);
+let savedBrightness = loadSetting('brightness', 100)
 let savedContrast = loadSetting('contrast', 50);
 let savedSaturation = loadSetting('saturation', 100);
 let savedFunmode = loadSetting('funmode', false);
@@ -18,11 +17,13 @@ let savedBackground = loadSetting('background', "wall");
 let savedOSLogo = loadSetting('oslogo', false);
 let savedTheme = loadSetting('theme', "dark");
 
+console.log(savedOSLogo);
+
 
 const darkThemeColors = {
     '--color-background-primary': '#0C1428',
     '--color-background-secondary': '#182036',
-    '--color-accent-primary': '#4c63af',
+    '--color-accent-primary': '#5ccbff',
 
     '--color-text-primary': '#FFFFFF',
     '--color-text-secondary': '#FFFFFF',
@@ -45,7 +46,7 @@ const darkThemeColors = {
 const lightThemeColors = {
     '--color-background-primary': '#eff1f5',
     '--color-background-secondary': '#e6e9ef',
-    '--color-accent-primary': '#7287fd',
+    '--color-accent-primary': '#5ccbff',
 
     '--color-text-primary': '#4c4f69',
     '--color-text-secondary': '#000000',
@@ -227,16 +228,21 @@ function openApp(appId) {
 
     if (appId !== 'settings-app') {
         const appContent = app.querySelector(".app-window-content");
+        if (appContent) {
+            if (!appContent.dataset.originalContent) {
+                appContent.dataset.originalContent = appContent.innerHTML;
+            }
 
-        if (!appContent.dataset.originalContent) {
-            appContent.dataset.originalContent = appContent.innerHTML;
+            if (savedAirplanemode) {
+                appContent.innerHTML = '<p class="app-content-text" id="no-connection">No Internet Connection</p>';
+            } else {
+                appContent.innerHTML = appContent.dataset.originalContent;
+            }
         }
+    }
 
-        if (savedAirplanemode) {
-            appContent.innerHTML = '<p class="app-content-text" id="no-connection">No Internet Connection</p>';
-        } else {
-            appContent.innerHTML = appContent.dataset.originalContent;
-        }
+    if (appId === 'aboutme-app') {
+        calculateAge();
     }
 }
 
@@ -361,14 +367,18 @@ function openContent(section) {
                 if (savedBackground === "none") {
                     bg.style.backgroundImage = "none"
                 } else {
-                    bg.style.backgroundImage = `url('assets/${savedBackground}.jpg')`
-                    loginbg.style.backgroundImage = `url('assets/${savedBackground}.jpg')`
+                    bg.style.backgroundImage = `url('../assets/${savedBackground}.jpg')`
+                    loginbg.style.backgroundImage = `url('../assets/${savedBackground}.jpg')`
                 }
             });
             oslogoToggle.addEventListener('change', () => {
                 savedOSLogo = oslogoToggle.checked;
                 saveSetting('oslogo', savedOSLogo);
-                oslogo.classList.toggle("hidden");
+                if (savedOSLogo) {
+                    oslogo.classList.add("hidden");
+                } else {
+                    oslogo.classList.remove("hidden");
+                }
             });
             oslogoToggle.checked = savedOSLogo;
             bgselect.value = savedBackground;
@@ -676,7 +686,7 @@ function openContent(section) {
                     <div class="infovalue app-content-text">Responsive layout, optimized for multiple device types, accessible design, taskbar, and window system.</div>
 
                     <div class="infolabel app-content-text">Credits:</div>
-                    <div class="infovalue app-content-text">© 2025 Noah Niemeijer. All rights reserved. Third-party assets used under appropriate licenses.</div>
+                    <div class="infovalue app-content-text">© 2025 Noah N. All rights reserved. Third-party assets used under appropriate licenses.</div>
 
                     <div class="infolabel app-content-text">Contact:</div>
                     <div class="infovalue app-content-text">Please refer to the Personal Info application for contact details.</div>
@@ -774,39 +784,138 @@ async function checkForUpdates() {
     }
 }
 
+content = document.getElementById("aboutme-window-content");
+defaultContent = content.innerHTML;
+
+function calculateAge() {
+    ageText = document.getElementById("ageNumber");
+    ageRounded = document.getElementById("age-rounded");
+    const age = dayjs().diff(dayjs('2010-03-06'), 'days');
+    ageInDecimals = age / 365.25;
+    ageText.innerHTML = `${ageInDecimals.toFixed(1)} years`;
+    ageRounded.innerHTML = `${ageInDecimals.toFixed(0)}`;
+}
+
+function openAgeTab() {
+    content.innerHTML = `
+        <div id="age-tab-top-bar">
+            <button id="close-age-tab" onclick="closeAgeTab()">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+        </div>
+        <div id="age">
+            <p class="age-content-title">Birthday Countdown 🎉</p>
+            <div id="birthday-countdown-container">
+                <div class="countdown-box">
+                    <span id="countdown-days" class="countdown-value"></span>
+                    <span class="countdown-label">days</span>
+                </div>
+                <div class="countdown-box">
+                    <span id="countdown-hours" class="countdown-value"></span>
+                    <span class="countdown-label">hours</span>
+                </div>
+                <div class="countdown-box">
+                    <span id="countdown-minutes" class="countdown-value"></span>
+                    <span class="countdown-label">minutes</span>
+                </div>
+                <div class="countdown-box">
+                    <span id="countdown-seconds" class="countdown-value"></span>
+                    <span class="countdown-label">seconds</span>
+                </div>
+            </div>
+            <p class="content-title">My Exact Age</p>
+            <div id="precise-age" class="app-content-text"></div>
+        </div>
+    `;
+
+    const birthDate = dayjs("2010-03-06");
+
+    function updateCountdown() {
+        if (!(content.innerHTML === defaultContent)) {
+            const now = dayjs();
+
+            const ageInMilliseconds = now.diff(birthDate);
+            const ageInYears = ageInMilliseconds / (1000 * 60 * 60 * 24 * 365.2425);
+            const ageElem = document.getElementById("precise-age");
+            if (ageElem) {
+                ageElem.textContent = ageInYears.toFixed(9) + " years old";
+            }
+
+            let nextBirthday = dayjs(`${now.year()}-${birthDate.format("MM-DD")}`);
+            if (nextBirthday.isBefore(now)) {
+                nextBirthday = nextBirthday.add(1, "year");
+            }
+
+            const diffMs = nextBirthday.diff(now);
+            const duration = dayjs.duration(diffMs);
+
+            const days = Math.floor(duration.asDays());
+            const hours = duration.hours();
+            const minutes = duration.minutes();
+            const seconds = duration.seconds();
+
+            const daysElem = document.getElementById("countdown-days");
+            if (daysElem) {
+                daysElem.textContent = days;
+            }
+
+            const hoursElem = document.getElementById("countdown-hours");
+            if (hoursElem) {
+                hoursElem.textContent = hours;
+            }
+
+            const minutesElem = document.getElementById("countdown-minutes");
+            if (minutesElem) {
+                minutesElem.textContent = minutes;
+            }
+
+            const secondsElem = document.getElementById("countdown-seconds");
+            if (secondsElem) {
+                secondsElem.textContent = seconds;
+            }
+        }
+    }
+
+    
+
+    updateCountdown();
+    setInterval(updateCountdown, 1);
+}
+
+
+function closeAgeTab() {
+    content.innerHTML = defaultContent;
+    calculateAge();
+}
+
 function applySavedSettings() {
-    // Thema toepassen
     applyTheme(savedTheme);
 
-    // Achtergrond toepassen
     const bg = document.getElementById("main-content");
     const loginbg = document.getElementById("login-bg");
     if (savedBackground === "none") {
         bg.style.backgroundImage = "none";
         loginbg.style.backgroundImage = "none";
     } else {
-        bg.style.backgroundImage = `url('assets/${savedBackground}.jpg')`;
-        loginbg.style.backgroundImage = `url('assets/${savedBackground}.jpg')`;
-    }
-
-    // OS-logo
-    const oslogo = document.getElementById("logo-large");
-    if (oslogo) {
-        if (savedOSLogo) {
-            oslogo.classList.add("hidden");
-        } else {
-            oslogo.classList.remove("hidden");
+        bg.style.backgroundImage = `url('../assets/${savedBackground}.jpg')`;
+        if (loginbg) {
+            loginbg.style.backgroundImage = `url('../assets/${savedBackground}.jpg')`;
         }
     }
 
-    // Filters toepassen
+    const oslogo = document.getElementById("logo-large");
+    if (savedOSLogo) {
+        oslogo.classList.add("hidden");
+    } else {
+        oslogo.classList.remove("hidden");
+    }
+
     const desktop = document.getElementById("desktop");
     const brightnessVal = savedBrightness / 100;
     const contrastVal = savedContrast / 50;
     const saturationVal = 100 - savedSaturation;
     desktop.style.filter = `brightness(${brightnessVal}) contrast(${contrastVal}) grayscale(${saturationVal}%)`;
-
-    // Batterij
+    
     const battery = document.getElementById("battery");
     const batteryIcon = document.getElementById("battery-icon");
     if (battery && batteryIcon) {
@@ -831,7 +940,6 @@ function applySavedSettings() {
         }
     }
 
-    // Internet icoon
     const wifiIcon = document.getElementById("wifi-icon");
     if (wifiIcon) {
         wifiIcon.classList.remove("fa-wifi", "fa-ethernet", "fa-plane-up");
@@ -842,6 +950,101 @@ function applySavedSettings() {
         }
     }
 }
+
+let originalBodyHTML = null;
+let countdownInterval = null;
+
+function handleHash() {
+  if (location.hash === "#age") {
+    if (!originalBodyHTML) originalBodyHTML = document.body.innerHTML;
+    document.body.classList.add('age');
+    document.body.innerHTML = `
+      <div id="age">
+        <p class="age-content-title">Birthday Countdown 🎉</p>
+        <div id="birthday-countdown-container">
+          <div class="countdown-box">
+            <span id="countdown-days" class="countdown-value"></span>
+            <span class="countdown-label">days</span>
+          </div>
+          <div class="countdown-box">
+            <span id="countdown-hours" class="countdown-value"></span>
+            <span class="countdown-label">hours</span>
+          </div>
+          <div class="countdown-box">
+            <span id="countdown-minutes" class="countdown-value"></span>
+            <span class="countdown-label">minutes</span>
+          </div>
+          <div class="countdown-box">
+            <span id="countdown-seconds" class="countdown-value"></span>
+            <span class="countdown-label">seconds</span>
+          </div>
+        </div>
+        <p class="content-title">My Exact Age</p>
+        <div id="precise-age" class="app-content-text"></div>
+      </div>`;
+
+    startCountdown();
+  } else {
+    document.body.classList.remove('age');
+    if (originalBodyHTML) {
+      clearInterval(countdownInterval);
+      countdownInterval = null;
+      document.body.innerHTML = originalBodyHTML;
+    }
+  }
+}
+
+function startCountdown() {
+  const birthDate = dayjs("2010-03-06");
+  const defaultContent = ""; // If you want to check for content changes, else remove this check.
+
+  function updateCountdown() {
+    // Only update if #age div exists on page (means age content is showing)
+    if (document.getElementById("age")) {
+      const now = dayjs();
+
+      const ageInMilliseconds = now.diff(birthDate);
+      const ageInYears = ageInMilliseconds / (1000 * 60 * 60 * 24 * 365.2425);
+      const ageElem = document.getElementById("precise-age");
+      if (ageElem) {
+        ageElem.textContent = ageInYears.toFixed(9) + " years old";
+      }
+
+      let nextBirthday = dayjs(`${now.year()}-${birthDate.format("MM-DD")}`);
+      if (nextBirthday.isBefore(now)) {
+        nextBirthday = nextBirthday.add(1, "year");
+      }
+
+      const diffMs = nextBirthday.diff(now);
+      const duration = dayjs.duration(diffMs);
+
+      const days = Math.floor(duration.asDays());
+      const hours = duration.hours();
+      const minutes = duration.minutes();
+      const seconds = duration.seconds();
+
+      const daysElem = document.getElementById("countdown-days");
+      if (daysElem) daysElem.textContent = days;
+
+      const hoursElem = document.getElementById("countdown-hours");
+      if (hoursElem) hoursElem.textContent = hours;
+
+      const minutesElem = document.getElementById("countdown-minutes");
+      if (minutesElem) minutesElem.textContent = minutes;
+
+      const secondsElem = document.getElementById("countdown-seconds");
+      if (secondsElem) secondsElem.textContent = seconds;
+    }
+  }
+
+  updateCountdown();
+  if (countdownInterval) clearInterval(countdownInterval);
+  countdownInterval = setInterval(updateCountdown, 1);
+}
+
+window.addEventListener("load", handleHash);
+window.addEventListener("hashchange", handleHash);
+
 
 document.addEventListener("DOMContentLoaded", () => {
     applySavedSettings();

@@ -5,8 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" viewport-fit=cover>
     <meta name="theme-color" content="#0C1428">
     <link rel="icon" type="image/x-icon" href="/assets/logo-transparent.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/duration.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/relativeTime.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/customParseFormat.js"></script>
+    <script>
+        dayjs.extend(dayjs_plugin_duration);
+        dayjs.extend(dayjs_plugin_relativeTime);
+        dayjs.extend(dayjs_plugin_customParseFormat);
+    </script>
+    <script src="../script.js" defer></script>
     <title>NoahOS Portfolio</title>
 </head>
 <body>
@@ -14,7 +24,7 @@
         <div class="oslogo"></div>
         <p id="shutdown-text">Shutting down...</p>
     </div>
-    <div id="startup">
+    <!-- <div id="startup">
         <div class="oslogo"></div>
         <p id="startup-text">Starting...</p>
         <div class="loading-bar">
@@ -26,7 +36,7 @@
         <div class="profile-picture"></div>
         <p id="username">admin</p>
         <button class="start-button" onclick="startWebsite()"><i class="fa-solid fa-arrow-right" style="color: var(--color-text-primary); font-size: 25px;"></i></button>
-    </div>
+    </div> -->
     <div id="desktop">
         <div id="shutdown-window" style="display: none;">
             <p class="alert-text">Are you sure you want to shutdown?</p>
@@ -50,8 +60,55 @@
                     <button class="fullscreen-button" onclick="toggleFullscreen('aboutme-app')"><i class="fa-solid fa-expand button-icon"></i></button>
                     <button class="close-button" onclick="closeApp('aboutme-app')"><i class="fa-solid fa-xmark"></i></button>
                 </div>
-                <div class="app-window-content">
-                    <p class="app-content-text">This is the normal content of the app.</p>
+                <div id="aboutme-window-content">
+                    <img src="../assets/avatar.png" style="aspect-ratio: 1; width: 150px; margin-bottom: 40px;">
+                    <div id="aboutme-bio-container">
+                        <p class="app-content-text">
+                            Hi! I'm <b style="color: var(--color-accent-primary);">Noah</b>, a <span id="age-rounded">--</span>-year-old student from <b style="color: var(--color-accent-primary);">The Netherlands</b> 🇳🇱.
+                            I'm currently in my 5th year of high school (VWO) and I have a strong passion for <b style="color: var(--color-accent-primary);">coding</b>, <b style="color: var(--color-accent-primary);">tech</b>, and building creative stuff.
+                        </p>
+                        <br>
+                        <p class="app-content-text">
+                            My goal is to <b style="color: var(--color-accent-primary);">learn</b> more about certain programming languages, and start a more large-scale coding project. 
+                            Outside of coding, I like to play <b style="color: var(--color-accent-primary);">guitar</b> 🎸, <b style="color: var(--color-accent-primary);">speedcube</b>, or <b style="color: var(--color-accent-primary);">play chess</b>. 
+                        </p>
+                    </div>
+                    <div id="aboutme-cards-container">
+                        <div class="aboutme-card">
+                            <p class="app-content-text" style="margin: 0;"><b><i class="fa-solid fa-signature"></i>&nbsp; Name:</b></p>
+                            <p class="app-content-text" style="margin-top: 10px;">Noah N.</p>
+                        </div>
+                        <div class="aboutme-card">
+                            <p class="app-content-text" style="margin: 0;"><b><i class="fa-solid fa-hashtag"></i>&nbsp; Age:</b></p>
+                            <p class="app-content-text" style="margin-top: 10px; margin-bottom: 7px;"><span id="ageNumber">--</span></p>
+                            <button onclick="openAgeTab()" class="more-button">More <i class="fa-solid fa-caret-right"></i></button>
+                        </div>
+                        <div class="aboutme-card">
+                            <p class="app-content-text" style="margin: 0;"><b><i class="fa-solid fa-id-card"></i>&nbsp; Pronouns:</b></p>
+                            <p class="app-content-text" style="margin-top: 10px;">He/Him</p>
+                        </div>
+                        <div class="aboutme-card">
+                            <p class="app-content-text" style="margin: 0;"><b><i class="fa-solid fa-earth"></i>&nbsp; Country:</b></p>
+                            <p class="app-content-text" style="margin-top: 10px;">🇳🇱 | Netherlands</p>
+                        </div>
+                        <div class="aboutme-card">
+                            <p class="app-content-text" style="margin: 0;"><b><i class="fa-solid fa-language"></i>&nbsp; Languages:</b></p>
+                            <p class="app-content-text" style="margin: 0; margin-top: 10px; margin-left: 20px;">🇳🇱 | Dutch</p>
+                            <p class="app-content-text">🇬🇧 | English</p>
+                        </div>
+                        <div class="aboutme-card">
+                            <p class="app-content-text" style="margin: 0;"><b><i class="fa-solid fa-briefcase"></i>&nbsp; Occupation:</b></p>
+                            <p class="app-content-text" style="margin-top: 10px;">Student</p>
+                        </div>
+                        <div class="aboutme-card">
+                            <p class="app-content-text" style="margin: 0;"><b><i class="fa-solid fa-user-graduate"></i>&nbsp; Education:</b></p>
+                            <p class="app-content-text" style="margin-top: 10px;">High school (VWO), Year 5</p>
+                        </div>
+                        <div class="aboutme-card">
+                            <p class="app-content-text" style="margin: 0;"><b><i class="fa-solid fa-bullseye"></i>&nbsp; Hobbies:</b></p>
+                            <p class="app-content-text" style="margin-top: 10px;">Coding, Guitar, Cubing</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="app-window" id="projects-app">
@@ -223,6 +280,5 @@
       window.addEventListener('orientationchange', setVh);
       setVh();
     </script>
-    <script src="script.js"></script>
 </body>
 </html>

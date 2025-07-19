@@ -6,7 +6,7 @@
     /* Thema-kleuren uit de niet-werkende versie */
     --color-background-primary: #0C1428;
     --color-background-secondary: #182036;
-    --color-accent-primary: #4c63af;
+    --color-accent-primary: #5ccbff;
 
     --color-text-primary: #FFFFFF;
     --color-text-secondary: #FFFFFF;
@@ -36,6 +36,14 @@ html {
     filter: brightness(1);
 }
 
+html.hash-mode {
+    display: none;
+}
+
+html.hash-mode #age{
+    display: block;
+}
+
 body {
     margin: 0;
     width: 100%;
@@ -44,6 +52,23 @@ body {
     overflow-y: auto;
 }
 
+body.age {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow-y: hidden;
+}
+
+body.age > #age {
+  transform: scale(1.5);
+}
+
+
 #desktop {
     position: relative;
     width: 100vw;
@@ -51,6 +76,153 @@ body {
     overflow: hidden;
     filter: brightness(1); /* standaard helderheid */
 }
+/* About Me App */
+        #aboutme-window-content {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+
+        #aboutme-cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+            padding: 20px;
+            box-sizing: border-box;
+            place-items: center;
+        }
+
+        .aboutme-card {
+            background-color: var(--color-background-secondary);
+            width: 100%;
+            max-width: 300px;
+            height: 15vh;
+            padding: 20px;
+            border-radius: 25px;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .aboutme-card:hover {
+            cursor: pointer;
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        #aboutme-bio-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-left: 15%;
+            padding-right: 15%;
+        }
+
+        .more-button {
+            border: none;
+            margin-left: 20px;
+            font-size: 1.8vh;
+            border-radius: 50px;
+            padding: 3px 10px;
+            color: var(--color-text-primary);
+            background: var(--color-background-app-button);
+            transition: all 0.2s ease;
+        }
+
+        .more-button:hover {
+            cursor: pointer;
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        #age-tab-top-bar {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            height: 8%;
+            width: 100%;
+            padding-left: 50px;
+            padding-top: 5px;
+        }
+
+        #close-age-tab {
+            height: 50px;
+            aspect-ratio: 1;
+            border: none;
+            border-radius: 50px;
+            background-color: var(--color-background-app-button);
+            color: var(--color-text-primary);
+            transition: all 0.2s ease;
+        }
+
+        #close-age-tab:hover {
+            cursor: pointer;
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        #birthday-countdown-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            color: var(--color-text-primary);
+            box-sizing: border-box;
+        }
+
+        .countdown-box {
+            background-color: var(--color-background-secondary); 
+            padding: 20px 30px;
+            border-radius: 15px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 7vw;
+        }
+
+        .countdown-value {
+            font-size: 3rem;
+            font-family: "M PLUS Rounded 1c", sans-serif;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .countdown-label {
+            font-size: 13px;
+            font-family: "M PLUS Rounded 1c", sans-serif;
+            text-transform: uppercase;
+            color: var(--color-text-secondary);
+        }
+
+        #age {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .age-content-title {
+            font-family: "M PLUS Rounded 1c", sans-serif;
+            font-size: 45px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: var(--color-text-primary);
+        }
+
+
 
 /* Settings App */
         #settings-content-container {
@@ -219,6 +391,7 @@ body {
         }
 
         input[type=number] {
+            appearance: textfield;
             -moz-appearance: textfield;
         }
 
@@ -486,7 +659,7 @@ body {
 .oslogo {
     width: 200px;
     aspect-ratio: 1;
-    background: url('assets/logo-transparent.png');
+    background: url('../assets/logo-transparent.png');
     background-position: center center;
     background-size: cover;
 }
@@ -587,7 +760,7 @@ body {
     position: fixed;
     width: 100%;
     height: 100%;
-    background-image: url("assets/wall.jpg");
+    background-image: url("../assets/wall.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -599,7 +772,7 @@ body {
 .profile-picture {
     width: 200px;
     aspect-ratio: 1;
-    background-image: url("assets/profile.png");
+    background-image: url("../assets/profile.png");
     background-size: 220px;
     background-position: center center;
     margin-bottom: 0px;
@@ -711,7 +884,7 @@ body {
 #main-content {
     width: 100%;
     height: 100%;
-    background-image: url("assets/wall.jpg");
+    background-image: url("../assets/wall.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -753,7 +926,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-image: url("assets/logo-gray-transparent.png");
+    background-image: url("../assets/logo-gray-transparent.png");
     background-position: center center;
     background-size: cover;
     z-index: 0;
@@ -917,6 +1090,10 @@ body {
 /* Mobile/Tablet */
 
 @media (max-width: 730px) {
+    body.age > #age {
+        transform: scale(0.9);
+    }
+
     .app-grid {
         display: flex;
         flex-direction: row;
@@ -982,7 +1159,7 @@ body {
     #homebutton {
         height: 80%;
         aspect-ratio: 1;
-        background-image: url("assets/logo-transparent.png");
+        background-image: url("../assets/logo-transparent.png");
         background-position: center center;
         background-size: cover;
         z-index: 2;
@@ -1102,6 +1279,33 @@ body {
         #no-connection {
             font-size: 13.8px;
         }
+
+        #aboutme-cards-container {
+            display: flex;
+            flex-direction: column;
+
+        }
+        #aboutme-bio-container {
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+
+        .aboutme-card {
+            max-width: 90%;
+            width: 90%;
+        }
+
+        .age-content-title {
+            font-size: 6vw;
+        }
+
+        #birthday-countdown-container {
+            flex-direction: column;
+        }
+
+        .countdown-box {
+            width: 50vw;
+        }
 }
 
 @media (max-width: 350px) {
@@ -1204,7 +1408,7 @@ body {
         aspect-ratio: 1;
         background-color: rgba(0, 0, 0, 0);
         border: none;
-        background-image: url("assets/logo-transparent.png");
+        background-image: url("../assets/logo-transparent.png");
         background-position: center center;
         background-size: cover;
         z-index: 2;
@@ -1245,7 +1449,7 @@ body {
     .start-menu-logo {
         width: 100px;
         aspect-ratio: 1;
-        background: url('assets/logo-transparent.png');
+        background: url('../assets/logo-transparent.png');
         background-position: center center;
         background-size: cover;
         margin: 0;
@@ -1355,55 +1559,55 @@ body {
 /* Icons */
 
 #github, #github-sm{
-    background-image: url('assets/github.jpg');
+    background-image: url('../assets/github.jpg');
     background-position: center center;
     background-size: cover;
 }
 
 #aboutme, #aboutme-sm {
-    background-image: url('assets/aboutme.png');
+    background-image: url('../assets/aboutme.png');
     background-position: center center;
     background-size: cover;
 }
 
 #projects, #projects-sm {
-    background-image: url('assets/projects.png');
+    background-image: url('../assets/projects.png');
     background-position: center center;
     background-size: cover;
 }
 
 #skills, #skills-sm {
-    background-image: url('assets/skills.png');
+    background-image: url('../assets/skills.png');
     background-position: center center;
     background-size: cover;
 }
 
 #websites, #websites-sm {
-    background-image: url('assets/websites.png');
+    background-image: url('../assets/websites.png');
     background-position: center center;
     background-size: cover;
 }
 
 #contact, #contact-sm {
-    background-image: url('assets/contact.png');
+    background-image: url('../assets/contact.png');
     background-position: center center;
     background-size: cover;
 }
 
 #gallery, #gallery-sm {
-    background-image: url('assets/gallery.png');
+    background-image: url('../assets/gallery.png');
     background-position: center center;
     background-size: cover;
 }
 
 #documents, #documents-sm {
-    background-image: url('assets/documents.png');
+    background-image: url('../assets/documents.png');
     background-position: center center;
     background-size: cover;
 }
 
 #settings, #settings-sm {
-    background-image: url('assets/settings.png');
+    background-image: url('../assets/settings.png');
     background-position: center center;
     background-size: cover;
 }
