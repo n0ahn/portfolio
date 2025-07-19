@@ -768,7 +768,7 @@ async function checkForUpdates() {
         document.getElementById('os-type').textContent = versionData.type;
         document.getElementById('os-notes').textContent = versionData.notes;
 
-        const commitsRes = await fetch('https://api.github.com/repos/noahniemeijer/portfolio/commits');
+        const commitsRes = await fetch('https://api.github.com/repos/n0ahn/portfolio/commits');
         const commits = await commitsRes.json();
         const latestCommit = commits[0];
 
