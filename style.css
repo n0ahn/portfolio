@@ -1091,7 +1091,7 @@ body.age > #age {
 
 @media (max-width: 730px) {
     body.age > #age {
-        transform: scale(0.9);
+        transform: scale(0.75);
     }
 
     .app-grid {

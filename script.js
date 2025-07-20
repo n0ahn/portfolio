@@ -979,7 +979,7 @@ function handleHash() {
             <span class="countdown-label">seconds</span>
           </div>
         </div>
-        <p class="content-title">My Exact Age</p>
+        <p class="age-content-title">My Exact Age</p>
         <div id="precise-age" class="app-content-text"></div>
       </div>`;
 
