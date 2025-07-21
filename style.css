@@ -1192,7 +1192,7 @@ body.age > #age {
     height: 6vh !important;
     border-top-right-radius: 25px;
     border-top-left-radius: 25px;
-    background-color: var(--color-background-overlay-slight);
+    background-color: var(--color-background-dark-alpha);
     display: flex;
     justify-content: flex-end;
     align-items: center;
