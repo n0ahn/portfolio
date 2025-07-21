@@ -80,6 +80,7 @@ body.age > #age {
 .app-window-content {
     overflow: scroll;
     max-height: 100%;
+    height: 100%;
 }
 /* About Me App */
 
@@ -394,6 +395,97 @@ body.age > #age {
             transform: scale(1.05);
             filter: brightness(1.1);
         }
+
+/* Websites App */
+
+        #websites-window-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #web-searchbar-container {
+            padding: 20px;
+            padding-bottom: 10px;
+            z-index: 2;
+        }
+
+        #web-searchbar {
+            width: 100%;
+            height: 45px;
+            background: var(--color-background-secondary);
+            border-radius: 50px;
+            outline: none;
+            border: none;
+            font-size: clamp(14px, 2vh, 20px);
+            font-family: "M PLUS Rounded 1c", sans-serif;
+            font-weight: 500;
+            color: var(--color-text-primary);
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        #web-searchbar:focus {
+            box-shadow: inset 0 0 0 2px var(--color-text-primary);
+        }
+
+        #web-results-container {
+            position: absolute;
+            top: 80px; /* Adjust based on actual height of search bar + padding */
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 3;
+            pointer-events: none; /* So iframe behind can still be interacted if needed */
+        }
+
+        #websites-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            width: 92%;
+            max-height: 200px;
+            overflow-y: auto;
+            background: var(--color-background-secondary);
+            border-radius: 15px;
+            pointer-events: auto; /* Re-enable interaction */
+        }
+
+        #websites-list li {
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.7vh;
+            font-family: "M PLUS Rounded 1c", sans-serif;
+            font-weight: 500;
+            color: var(--color-text-primary);
+            border-radius: 15px;
+        }
+
+        #websites-list li:hover,
+        #websites-list li.selected {
+            background-color: var(--color-accent-primary);
+        }
+
+        #iframe-container {
+            margin-top: 10px;
+            flex: 1;
+            width: 100%;
+            padding: 10px 20px 20px 20px;
+            box-sizing: border-box;
+        }
+
+        #web-viewer {
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            border: none;
+            background: white;
+        }
+
+
 
 /* Settings App */
         #settings-content-container {

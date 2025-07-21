@@ -1,3 +1,4 @@
+
 function saveSetting(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
 }
@@ -243,9 +244,128 @@ function openApp(appId) {
 
     if (appId === 'aboutme-app') {
         calculateAge();
-    }
-}
+} else if (appId === 'websites-app') {
+    const searchInput = document.getElementById('web-searchbar');
+    const websitesList = document.getElementById('websites-list');
+    const websites = Array.from(websitesList.getElementsByTagName('li'));
+    const iframe = document.getElementById('web-viewer');
+    const fallbackContainer = document.getElementById('iframe-fallback-message');
 
+    let filteredWebsites = websites;
+    let selectedIndex = -1;
+    let blockedDomains = [];
+
+    // Load blocked domains JSON once
+    fetch('./data/blocked-sites.json')
+        .then(res => res.json())
+        .then(data => {
+            blockedDomains = data.map(domain => domain.toLowerCase());
+        })
+        .catch(err => {
+            console.error('Failed to load blocked sites list:', err);
+            blockedDomains = [];
+        });
+
+    searchInput.addEventListener('input', () => {
+        const filter = searchInput.value.toLowerCase();
+        selectedIndex = -1;
+
+        if (!filter) {
+            websitesList.style.display = 'none';
+            filteredWebsites = [];
+            updateFocus();
+            return;
+        } else {
+            websitesList.style.display = '';
+        }
+
+        filteredWebsites = websites.filter(site => {
+            const name = site.textContent.toLowerCase();
+            const url = site.dataset.url.toLowerCase();
+            const match = name.includes(filter) || url.includes(filter);
+            site.style.display = match ? '' : 'none';
+            return match;
+        });
+
+        selectedIndex = filteredWebsites.length > 0 ? 0 : -1;
+        updateFocus();
+    });
+
+    websites.forEach(li => {
+        li.addEventListener('click', () => {
+            loadInIframeOrFallback(li.dataset.url);
+            websitesList.style.display = 'none';
+            searchInput.value = '';
+        });
+    });
+
+    searchInput.addEventListener('keydown', e => {
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            if (filteredWebsites.length === 0) return;
+            selectedIndex = (selectedIndex + 1) % filteredWebsites.length;
+            updateFocus();
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            const inputValue = searchInput.value.trim();
+
+            if (filteredWebsites.length === 0 || selectedIndex === -1) {
+                let url = inputValue;
+                if (!/^https?:\/\//i.test(url)) {
+                    url = 'https://' + url;
+                }
+                loadInIframeOrFallback(url);
+            } else {
+                filteredWebsites[selectedIndex].click();
+            }
+
+            websitesList.style.display = 'none';
+        } else if (e.key === 'Escape') {
+            websitesList.style.display = 'none';
+            searchInput.blur();
+        }
+    });
+
+    function updateFocus() {
+        filteredWebsites.forEach((el, i) => {
+            el.classList.toggle('selected', i === selectedIndex);
+        });
+    }
+
+    function loadInIframeOrFallback(url) {
+        fallbackContainer.style.display = 'none';
+        iframe.style.display = 'block';
+
+        if (isBlocked(url)) {
+            iframe.style.display = 'none';
+            fallbackContainer.innerHTML = `
+                <div style="padding: 20px; font-family: sans-serif; color: var(--color-text-primary);">
+                    <p>This site cannot be displayed inside the app.</p>
+                    <a href="${url}" target="_blank" rel="noopener" style="color: var(--color-accent-primary); text-decoration: underline;">
+                        Open in a new tab
+                    </a>
+                </div>
+            `;
+            fallbackContainer.style.display = 'block';
+            iframe.src = '';
+        } else {
+            fallbackContainer.style.display = 'none';
+            iframe.src = url;
+        }
+    }
+
+    function isBlocked(url) {
+        try {
+            const domain = (new URL(url)).hostname.toLowerCase();
+            return blockedDomains.some(blocked => domain === blocked || domain.endsWith('.' + blocked));
+        } catch {
+            return false;
+        }
+    }
+
+    websitesList.style.display = 'none';
+}
+}
 
 function closeApp(appId) {
     const container = document.getElementById("app-window-container");
@@ -991,6 +1111,7 @@ function handleHash() {
   }
 }
 
+
 function startCountdown() {
   const birthDate = dayjs("2010-03-06");
   const defaultContent = ""; // If you want to check for content changes, else remove this check.
@@ -1046,4 +1167,3 @@ window.addEventListener("hashchange", handleHash);
 document.addEventListener("DOMContentLoaded", () => {
     applySavedSettings();
 });
-

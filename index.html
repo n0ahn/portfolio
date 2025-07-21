@@ -24,7 +24,7 @@
         <div class="oslogo"></div>
         <p id="shutdown-text">Shutting down...</p>
     </div>
-    <div id="startup">
+    <!-- <div id="startup">
         <div class="oslogo"></div>
         <p id="startup-text">Starting...</p>
         <div class="loading-bar">
@@ -36,7 +36,7 @@
         <div class="profile-picture"></div>
         <p id="username">admin</p>
         <button class="start-button" onclick="startWebsite()"><i class="fa-solid fa-arrow-right" style="color: var(--color-text-primary); font-size: 25px;"></i></button>
-    </div>
+    </div> -->
     <div id="desktop">
         <div id="shutdown-window" style="display: none;">
             <p class="alert-text">Are you sure you want to shutdown?</p>
@@ -178,9 +178,9 @@
                                 method="POST"
                             >
                                 <p class="content-title" style="margin: 0;">Email:</p>
-                                <input class="contact-input" type="email" name="email">
+                                <input placeholder="Enter your e-mail..." class="contact-input" type="email" name="email">
                                 <p class="content-title" style="margin: 0;">Your Message:</p>
-                                <textarea class="contact-textfield" name="message"></textarea>
+                                <textarea placeholder="Enter your message..." class="contact-textfield" name="message"></textarea>
                                 <button class="send-button" type="submit">Send</button>
                             </form>
                         </div>
@@ -194,7 +194,27 @@
                     <button class="close-button" onclick="closeApp('websites-app')"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="app-window-content">
-                    <p class="app-content-text">This is the normal content of the app.</p>
+                    <div id="websites-window-content">
+                        
+                        <div id="web-search-wrapper">
+                            <div id="web-searchbar-container">
+                                <input placeholder="Search..." class="web-searchbar" id="web-searchbar" autocomplete="off" />
+                            </div>
+
+                            <div id="web-results-container">
+                                <ul id="websites-list">
+                                    <li data-url="https://noahn.vercel.app" tabindex="0">Portfolio | <i style="opacity: 0.5; color: var(--color-text-secondary);">https://noahn.vercel.app</i></li>
+                                    <li data-url="https://htmlearn.vercel.app" tabindex="0">HTMLearn | <i style="opacity: 0.5; color: var(--color-text-secondary);">https://htmlearn.vercel.app</i></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="iframe-container">
+                            <iframe id="web-viewer" src="" frameborder="0"></iframe>
+                            <div id="iframe-fallback-message" style="display: none;"></div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
             <div class="app-window" id="gallery-app">
