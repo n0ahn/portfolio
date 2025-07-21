@@ -687,9 +687,6 @@ function openContent(section) {
 
                     <div class="infolabel app-content-text">Credits:</div>
                     <div class="infovalue app-content-text">© 2025 Noah N. All rights reserved. Third-party assets used under appropriate licenses.</div>
-
-                    <div class="infolabel app-content-text">Contact:</div>
-                    <div class="infovalue app-content-text">Please refer to the Personal Info application for contact details.</div>
                 </div>
             `;
 
@@ -804,7 +801,7 @@ function openAgeTab() {
             </button>
         </div>
         <div id="age">
-            <p class="age-content-title">Birthday Countdown 🎉</p>
+            <p class="big-content-title">Birthday Countdown 🎉</p>
             <div id="birthday-countdown-container">
                 <div class="countdown-box">
                     <span id="countdown-days" class="countdown-value"></span>
@@ -960,7 +957,7 @@ function handleHash() {
     document.body.classList.add('age');
     document.body.innerHTML = `
       <div id="age">
-        <p class="age-content-title">Birthday Countdown 🎉</p>
+        <p class="big-content-title">Birthday Countdown 🎉</p>
         <div id="birthday-countdown-container">
           <div class="countdown-box">
             <span id="countdown-days" class="countdown-value"></span>
@@ -979,8 +976,8 @@ function handleHash() {
             <span class="countdown-label">seconds</span>
           </div>
         </div>
-        <p class="age-content-title">My Exact Age</p>
-        <div id="precise-age" class="app-content-text"></div>
+        <p class="content-title">My Exact Age</p>
+        <div id="precise-age" class="app-content-text" style="margin: 0;"></div>
       </div>`;
 
     startCountdown();

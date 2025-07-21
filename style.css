@@ -76,7 +76,13 @@ body.age > #age {
     overflow: hidden;
     filter: brightness(1); /* standaard helderheid */
 }
+
+.app-window-content {
+    overflow: scroll;
+    max-height: 100%;
+}
 /* About Me App */
+
         #aboutme-window-content {
             margin-top: 20px;
             display: flex;
@@ -214,7 +220,7 @@ body.age > #age {
             padding: 20px;
         }
         
-        .age-content-title {
+        .big-content-title {
             font-family: "M PLUS Rounded 1c", sans-serif;
             font-size: 45px;
             font-weight: bold;
@@ -222,7 +228,172 @@ body.age > #age {
             color: var(--color-text-primary);
         }
 
+/* Skills App */
+        #skills-window-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            max-height: 90%;
+        }
 
+        hr {
+            color: var(--color-background-app-button);
+            width: 75%;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .skills-bar {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            background-color: var(--color-background-secondary);
+            width: 70%;
+            height: 4vh;
+            border-radius: 35px;
+            padding: 1vh;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .skills-bar:hover {
+            cursor: pointer;
+            transform: scale(1.03);
+            filter: brightness(1.1);
+        }
+
+        .skills-bar-fill {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: slide 2s forwards;
+            background: var(--color-accent-primary);
+            width: 0%;
+            height: 100%;
+            border-radius: 50px;
+            transform-origin: left;
+        }
+
+        .w-95 { --target-width: 95%; }
+        .w-90 { --target-width: 90%; }
+        .w-80 { --target-width: 80%; }
+        .w-70 { --target-width: 70%; }
+        .w-60 { --target-width: 60%; }
+        .w-50 { --target-width: 50%; }
+        .w-40 { --target-width: 40%; }
+        .w-30 { --target-width: 30%; }
+        .w-20 { --target-width: 20%; }
+        .w-1 { --target-width: 5%; }
+
+        @keyframes slide {
+            to {
+                width: var(--target-width);
+            }
+        }
+
+        .skills-bar-text {
+            position: fixed;
+            z-index: 500; 
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5vh;
+            font-family: "M PLUS Rounded 1c", sans-serif;
+            font-weight: 500;
+            color: var(--color-text-primary);
+        }
+
+/* Contact App */
+
+        #contact-window-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #contact-form-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--color-background-secondary);
+            padding: 20px;
+            border-radius: 15px;
+            width: 40%;
+            box-sizing: border-box;
+        }
+
+        #contact-form {
+            display: flex;
+            text-align: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .contact-input {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 10px;
+            height: 4vh;
+            background: var(--color-background-app-button);
+            outline: none;
+            padding-left: 20px;
+            padding-right: 20px;
+            color: var(--color-text-primary);
+            font-size: 1.5vh;
+            transition: all 0.2s ease;
+            font-family: "M PLUS Rounded 1c", sans-serif;
+            font-weight: 500;
+            width: 90%;
+        }
+
+        .contact-textfield {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 10px;
+            height: 15vh;
+            background: var(--color-background-app-button);
+            outline: none;
+            padding: 20px;
+            color: var(--color-text-primary);
+            font-size: 1.5vh;
+            transition: all 0.2s ease;
+            font-family: "M PLUS Rounded 1c", sans-serif;
+            font-weight: 500;
+            width: 90%;
+        }
+
+        .contact-input:focus, .contact-textfield:focus {
+            box-shadow: inset 0 0 0 2px var(--color-text-primary);
+        }
+
+        .send-button {
+            margin: 15px 0;
+            border: none;
+            border-radius: 10px;
+            height: 5vh;
+            background: var(--color-accent-primary);
+            outline: none;
+            color: var(--color-text-primary);
+            font-size: 2vh;
+            transition: all 0.2s ease;
+            font-family: "M PLUS Rounded 1c", sans-serif;
+            font-weight: 500;
+            width: 50%;
+        }
+
+        .send-button:hover {
+            cursor: pointer;
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
 
 /* Settings App */
         #settings-content-container {
@@ -1293,9 +1464,10 @@ body.age > #age {
         .aboutme-card {
             max-width: 90%;
             width: 90%;
+            height: auto;
         }
 
-        .age-content-title {
+        .big-content-title {
             font-size: 6vw;
         }
 
@@ -1305,6 +1477,15 @@ body.age > #age {
 
         .countdown-box {
             width: 50vw;
+        }
+
+        .skills-bar {
+            width: 90%;
+            height: 35px;
+        }
+
+        #contact-form-container {
+            width: 90%;
         }
 }
 

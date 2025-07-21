@@ -24,7 +24,7 @@
         <div class="oslogo"></div>
         <p id="shutdown-text">Shutting down...</p>
     </div>
-    <div id="startup">
+    <!-- <div id="startup">
         <div class="oslogo"></div>
         <p id="startup-text">Starting...</p>
         <div class="loading-bar">
@@ -36,7 +36,7 @@
         <div class="profile-picture"></div>
         <p id="username">admin</p>
         <button class="start-button" onclick="startWebsite()"><i class="fa-solid fa-arrow-right" style="color: var(--color-text-primary); font-size: 25px;"></i></button>
-    </div>
+    </div> -->
     <div id="desktop">
         <div id="shutdown-window" style="display: none;">
             <p class="alert-text">Are you sure you want to shutdown?</p>
@@ -128,7 +128,38 @@
                     <button class="close-button" onclick="closeApp('skills-app')"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="app-window-content">
-                    <p class="app-content-text">This is the normal content of the app.</p>
+                    <div id="skills-window-content">
+                        <p class="big-content-title" style="margin: 0;">Programming Languages</p>
+                        <hr>
+                        <div class="skills-bar">
+                            <div class="skills-bar-fill w-90" style="background-color: #e34c26"></div>
+                            <p class="skills-bar-text">HTML</p>
+                        </div>
+                        <div class="skills-bar">
+                            <div class="skills-bar-fill w-80" style="background-color: #264de4"></div>
+                            <p class="skills-bar-text">CSS</p>
+                        </div>
+                        <div class="skills-bar">
+                            <div class="skills-bar-fill w-20" style="background-color: #f0db4f"></div>
+                            <p class="skills-bar-text">JavaScript</p>
+                        </div>
+                        <div class="skills-bar">
+                            <div class="skills-bar-fill w-30" style="background-color: #306998"></div>
+                            <p class="skills-bar-text">Python</p>
+                        </div>
+                        <div class="skills-bar">
+                            <div class="skills-bar-fill w-1" style="background-color: #61dbfb"></div>
+                            <p class="skills-bar-text">React</p>
+                        </div>
+                        <div class="skills-bar">
+                            <div class="skills-bar-fill w-1" style="background-color: #f89820"></div>
+                            <p class="skills-bar-text">Java</p>
+                        </div>
+                        <div class="skills-bar">
+                            <div class="skills-bar-fill w-95"></div>
+                            <p class="skills-bar-text">Designs</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="app-window" id="contact-app">
@@ -138,7 +169,22 @@
                     <button class="close-button" onclick="closeApp('contact-app')"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="app-window-content">
-                    <p class="app-content-text">This is the normal content of the app.</p>
+                    <div id="contact-window-content">
+                        <p class="big-content-title" style="margin: 0;">Contact Me:</p>
+                        <div id="contact-form-container">
+                            <form
+                                id="contact-form"
+                                action="https://formspree.io/f/mkgzokad"
+                                method="POST"
+                            >
+                                <p class="content-title" style="margin: 0;">Email:</p>
+                                <input class="contact-input" type="email" name="email">
+                                <p class="content-title" style="margin: 0;">Your Message:</p>
+                                <textarea class="contact-textfield" name="message"></textarea>
+                                <button class="send-button" type="submit">Send</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="app-window" id="websites-app">
