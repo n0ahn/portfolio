@@ -216,6 +216,7 @@ function toggleStart() {
 }
 
 let zIndexCounter = 1000;
+const MAX_Z_INDEX = 9998;
 
 function focusApp(app) {
     const allApps = document.querySelectorAll('.app-window.active');
@@ -224,9 +225,13 @@ function focusApp(app) {
         a.classList.remove('focused');
     });
 
-    app.style.zIndex = ++zIndexCounter;
+    zIndexCounter++;
+    if (zIndexCounter >= MAX_Z_INDEX) zIndexCounter = 1001;
+
+    app.style.zIndex = zIndexCounter;
     app.classList.add('focused');
 }
+
 
 
 let activeAppId = null;

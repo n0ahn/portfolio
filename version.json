@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.1.1",
   "type": "Alpha",
-  "notes": "Added fully working minimal window manager."
+  "notes": "Small bug fixes."
 }
