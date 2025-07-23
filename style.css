@@ -1501,6 +1501,9 @@ body.age > #age {
         margin: 0;
     }
 
+    .app-window.focused {
+        outline: none;
+    }
 
     .app-window-top-bar {
         border-radius: 0px;
