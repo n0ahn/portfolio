@@ -218,6 +218,8 @@ let activeAppId = null;
 function openApp(appId) {
     const container = document.getElementById("app-window-container");
     const app = document.getElementById(appId);
+    const appContent = app.querySelector(".app-window-content");
+    const aboutmeAppContent = document.getElementById("aboutme-window-content");
 
     activeAppId = appId;
 
@@ -227,8 +229,7 @@ function openApp(appId) {
         app.classList.add("active");
     }, 10);
 
-    if (appId !== 'settings-app') {
-        const appContent = app.querySelector(".app-window-content");
+    if (appId !== 'settings-app' && appId !== 'aboutme-app') {
         if (appContent) {
             if (!appContent.dataset.originalContent) {
                 appContent.dataset.originalContent = appContent.innerHTML;
@@ -243,7 +244,19 @@ function openApp(appId) {
     }
 
     if (appId === 'aboutme-app') {
-        calculateAge();
+        const aboutmeAppContent = document.getElementById("aboutme-window-content");
+
+        if (!aboutmeAppContent.dataset.originalContent) {
+            aboutmeAppContent.dataset.originalContent = aboutmeAppContent.innerHTML;
+        }
+
+        if (savedAirplanemode) {
+            aboutmeAppContent.innerHTML = '<p class="app-content-text" id="no-connection">No Internet Connection</p>';
+        } else {
+            aboutmeAppContent.innerHTML = aboutmeAppContent.dataset.originalContent;
+            calculateAge();
+        }
+        
 } else if (appId === 'websites-app') {
     const searchInput = document.getElementById('web-searchbar');
     const websitesList = document.getElementById('websites-list');
@@ -255,7 +268,6 @@ function openApp(appId) {
     let selectedIndex = -1;
     let blockedDomains = [];
 
-    // Load blocked domains JSON once
     fetch('./data/blocked-sites.json')
         .then(res => res.json())
         .then(data => {
@@ -364,7 +376,34 @@ function openApp(appId) {
     }
 
     websitesList.style.display = 'none';
-}
+    } else if (appId === 'projects-app') {
+        const container = document.getElementById('projects-window-content');
+        if (container) {
+            container.innerHTML = '<p class="app-content-text">Loading repositories...</p>';
+
+            fetch('https://api.github.com/users/n0ahn/repos')
+                .then(res => res.json())
+                .then(repos => {
+                container.innerHTML = '';
+
+                repos.forEach(repo => {
+                    const card = document.createElement('div');
+                    card.className = 'repo-card';
+                    card.innerHTML = `
+                    <h3 class="content-title" style="margin: 0; margin-bottom: 15px;">${repo.name}</h3>
+                    <p class="app-content-text" style="margin: 0; margin-bottom: 15px;">${repo.description || 'No description'}</p>
+                    <p><i style="color: white;" class="fa-brands fa-github"></i> <a class="app-content-text" style="margin: 0;" href="${repo.html_url}" target="_blank">View on GitHub</a></p>
+                    `;
+                    container.appendChild(card);
+                });
+                })
+                .catch(err => {
+                container.innerHTML = '<p class="app-content-text">Failed to load repositories.</p>';
+                console.error(err);
+                });
+            }
+    }
+
 }
 
 function closeApp(appId) {
@@ -1004,6 +1043,34 @@ function closeAgeTab() {
     content.innerHTML = defaultContent;
     calculateAge();
 }
+
+const galleryImages = [
+  // Fill when needed
+];
+
+const gallery = document.getElementById('gallery-grid');
+galleryImages.forEach(src => {
+  const img = document.createElement('img');
+  img.src = src;
+  img.alt = 'Gallery image';
+  img.style.width = '150px';
+  img.style.height = '150px';
+  img.style.objectFit = 'cover';
+  img.style.borderRadius = '8px';
+  img.style.boxShadow = '0 0 4px rgba(0,0,0,0.2)';
+  img.style.cursor = 'pointer';
+  gallery.appendChild(img);
+});
+
+const documentsFiles = [
+  // Fill when needed
+];
+
+const documents = document.getElementById('documents-grid');
+documentsFiles.forEach(src => {
+    // Finish Later
+});
+
 
 function applySavedSettings() {
     applyTheme(savedTheme);
