@@ -27,6 +27,7 @@ const darkThemeColors = {
     '--color-accent-primary': '#5ccbff',
 
     '--color-text-primary': '#FFFFFF',
+    '--color-text-primary-opacity': '#FFFFFF80;',
     '--color-text-secondary': '#FFFFFF',
     '--color-text-danger': 'rgba(87, 0, 0, 1)',
 
@@ -50,6 +51,7 @@ const lightThemeColors = {
     '--color-accent-primary': '#5ccbff',
 
     '--color-text-primary': '#4c4f69',
+    '--color-text-primary-opacity': '#4c4f6980;',
     '--color-text-secondary': '#000000',
     '--color-text-danger': '#d20f39',
 
@@ -213,6 +215,20 @@ function toggleStart() {
     }
 }
 
+let zIndexCounter = 1000;
+
+function focusApp(app) {
+    const allApps = document.querySelectorAll('.app-window.active');
+    allApps.forEach(a => {
+        a.style.zIndex = ''; // reset
+        a.classList.remove('focused');
+    });
+
+    app.style.zIndex = ++zIndexCounter;
+    app.classList.add('focused');
+}
+
+
 let activeAppId = null;
 
 function openApp(appId) {
@@ -220,14 +236,26 @@ function openApp(appId) {
     const app = document.getElementById(appId);
     const appContent = app.querySelector(".app-window-content");
     const aboutmeAppContent = document.getElementById("aboutme-window-content");
-
-    activeAppId = appId;
+    if (!app) return;
 
     container.style.display = "flex";
-    setTimeout(() => {
-        container.classList.add("visible");
+    container.classList.remove("visible");
+    void container.offsetWidth;
+    container.classList.add("visible");
+
+
+    if (container.style.display !== "flex") {
+        container.style.display = "flex";
+        setTimeout(() => container.classList.add("visible"), 10);
+    }
+
+    if (!app.classList.contains("active")) {
         app.classList.add("active");
-    }, 10);
+        makeDraggable(app);
+        addResizeHandles(app);
+    }
+
+    focusApp(app);
 
     if (appId !== 'settings-app' && appId !== 'aboutme-app') {
         if (appContent) {
@@ -407,37 +435,78 @@ function openApp(appId) {
 }
 
 function closeApp(appId) {
-    const container = document.getElementById("app-window-container");
     const app = document.getElementById(appId);
 
     if (activeAppId === appId) activeAppId = null;
 
-    container.classList.remove("visible");
     app.classList.remove("active");
+    app.classList.add("closing");
 
     setTimeout(() => {
-        container.style.display = "none";
+        app.classList.remove("closing");
+
+        const container = document.getElementById("app-window-container");
+        const anyOtherActive = [...document.querySelectorAll('.app-window')].some(w => w.classList.contains('active'));
+        if (!anyOtherActive) {
+            container.classList.remove("visible");
+            container.style.display = "none";
+        }
     }, 300);
 }
 
+
+
+document.querySelectorAll('.app-window').forEach(app => {
+    app.addEventListener('mousedown', () => {
+        if (!app.classList.contains('active')) return;
+        focusApp(app);
+    });
+});
+
+
 function toggleFullscreen(appId) {
     const app = document.getElementById(appId);
-    const button = document.querySelector('.close-button');
-    const settingscontent = document.getElementById('settings-content');
-    app.classList.toggle('fullscreen');
-    button.classList.toggle('fullscreen');
-    settingscontent.classList.toggle('fullscreen');
-    
-
     const icon = app.querySelector('.fullscreen-button i');
-    if (app.classList.contains('fullscreen')) {
+
+    if (!app.classList.contains('fullscreen')) {
+        saveWindowState(app);
+
+        app.style.position = 'fixed';
+        app.style.left = app.dataset.prevLeft + 'px';
+        app.style.top = app.dataset.prevTop + 'px';
+        app.style.width = app.dataset.prevWidth + 'px';
+        app.style.height = app.dataset.prevHeight + 'px';
+
+        app.offsetWidth; 
+
+        app.classList.add('fullscreen');
+
         icon.classList.remove('fa-expand');
         icon.classList.add('fa-compress');
     } else {
+        const rect = app.getBoundingClientRect();
+        app.style.position = 'fixed';
+        app.style.left = rect.left + 'px';
+        app.style.top = rect.top + 'px';
+        app.style.width = rect.width + 'px';
+        app.style.height = rect.height + 'px';
+
+        app.offsetWidth;
+        app.classList.remove('fullscreen');
+
+        app.style.position = 'absolute';
+        app.style.left = app.dataset.prevLeft + 'px';
+        app.style.top = app.dataset.prevTop + 'px';
+        app.style.width = app.dataset.prevWidth + 'px';
+        app.style.height = app.dataset.prevHeight + 'px';
+
         icon.classList.remove('fa-compress');
         icon.classList.add('fa-expand');
     }
 }
+
+
+
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && activeAppId) {
@@ -454,6 +523,164 @@ document.addEventListener('keydown', (event) => {
         }
     }
 });
+
+function saveWindowState(windowEl) {
+    const rect = windowEl.getBoundingClientRect();
+    windowEl.dataset.prevLeft = rect.left;
+    windowEl.dataset.prevTop = rect.top;
+    windowEl.dataset.prevWidth = rect.width;
+    windowEl.dataset.prevHeight = rect.height;
+}
+
+
+function makeDraggable(windowEl) {
+    const topBar = windowEl.querySelector(".app-window-top-bar");
+    if (!topBar) return;
+
+    let offsetX = 0, offsetY = 0, isDragging = false;
+
+    topBar.style.cursor = "move";
+
+    topBar.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        offsetX = e.clientX - windowEl.getBoundingClientRect().left;
+        offsetY = e.clientY - windowEl.getBoundingClientRect().top;
+        windowEl.style.zIndex = 1000;
+        windowEl.style.transition = "none";
+    });
+
+    document.addEventListener("mousemove", (e) => {
+        if (!isDragging || windowEl.classList.contains("fullscreen")) return;
+
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        let newLeft = e.clientX - offsetX;
+        let newTop = e.clientY - offsetY;
+
+        const rect = windowEl.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+
+        if (newLeft < 0) newLeft = 0;
+        if (newTop < 0) newTop = 0;
+        if (newLeft + width > viewportWidth) newLeft = viewportWidth - width;
+        if (newTop + height > viewportHeight) newTop = viewportHeight - height;
+
+        windowEl.style.position = "absolute";
+        windowEl.style.left = `${newLeft}px`;
+        windowEl.style.top = `${newTop}px`;
+    });
+
+    document.addEventListener("mouseup", () => {
+        isDragging = false;
+        windowEl.style.transition = "all 0.5s ease";
+    });
+
+    topBar.addEventListener("dblclick", () => {
+        toggleFullscreen(windowEl.id);
+    });
+
+    addResizeHandles(windowEl);
+}
+
+function addResizeHandles(el) {
+    const directions = [
+        "n", "e", "s", "w",
+        "ne", "se", "sw", "nw"
+    ];
+
+    directions.forEach(dir => {
+        const handle = document.createElement("div");
+        handle.className = `resize-handle resize-${dir}`;
+        el.appendChild(handle);
+
+        handle.addEventListener("mousedown", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            el.style.transition = "none";
+
+            const startX = e.clientX;
+            const startY = e.clientY;
+            const startWidth = parseInt(document.defaultView.getComputedStyle(el).width, 10);
+            const startHeight = parseInt(document.defaultView.getComputedStyle(el).height, 10);
+            const startLeft = el.offsetLeft;
+            const startTop = el.offsetTop;
+
+            const minWidth = 150;
+            const minHeight = 100;
+
+            function clampResize(newLeft, newTop, newWidth, newHeight) {
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+
+                if (newLeft < 0) newLeft = 0;
+                if (newTop < 0) newTop = 0;
+
+                if (newWidth < minWidth) newWidth = minWidth;
+                if (newHeight < minHeight) newHeight = minHeight;
+
+                if (newLeft + newWidth > viewportWidth) {
+                    newWidth = viewportWidth - newLeft;
+                    if (newWidth < minWidth) {
+                        newWidth = minWidth;
+                        newLeft = viewportWidth - newWidth;
+                    }
+                }
+
+                if (newTop + newHeight > viewportHeight) {
+                    newHeight = viewportHeight - newTop;
+                    if (newHeight < minHeight) {
+                        newHeight = minHeight;
+                        newTop = viewportHeight - newHeight;
+                    }
+                }
+
+                return { newLeft, newTop, newWidth, newHeight };
+            }
+
+            function doDrag(e) {
+                let newWidth = startWidth;
+                let newHeight = startHeight;
+                let newLeft = startLeft;
+                let newTop = startTop;
+
+                if (dir.includes("e")) {
+                    newWidth = startWidth + e.clientX - startX;
+                }
+                if (dir.includes("s")) {
+                    newHeight = startHeight + e.clientY - startY;
+                }
+                if (dir.includes("w")) {
+                    newWidth = startWidth - (e.clientX - startX);
+                    newLeft = startLeft + (e.clientX - startX);
+                }
+                if (dir.includes("n")) {
+                    newHeight = startHeight - (e.clientY - startY);
+                    newTop = startTop + (e.clientY - startY);
+                }
+
+                const clamped = clampResize(newLeft, newTop, newWidth, newHeight);
+
+                el.style.width = `${clamped.newWidth}px`;
+                el.style.height = `${clamped.newHeight}px`;
+                el.style.left = `${clamped.newLeft}px`;
+                el.style.top = `${clamped.newTop}px`;
+            }
+
+            function stopDrag() {
+                document.documentElement.removeEventListener("mousemove", doDrag);
+                document.documentElement.removeEventListener("mouseup", stopDrag);
+                el.style.transition = "all 0.5s ease";
+            }
+
+            document.documentElement.addEventListener("mousemove", doDrag);
+            document.documentElement.addEventListener("mouseup", stopDrag);
+        });
+    });
+}
+
+
 
 function openContent(section) {
     const content = document.getElementById('settings-content');
