@@ -1665,6 +1665,10 @@ body.age > #age {
             font-size: 13.8px;
         }
 
+        #aboutme-window-content {
+            overflow: scroll;
+        }
+
         #aboutme-cards-container {
             display: flex;
             flex-direction: column;
