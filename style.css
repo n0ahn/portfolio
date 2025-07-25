@@ -32,7 +32,7 @@ html {
     background: var(--color-background-primary);
     width: 100%;
     height: calc(var(--vh, 1vh) * 100);
-    overflow-y: auto;
+    overflow: hidden;
     filter: brightness(1);
 }
 
@@ -48,7 +48,7 @@ body {
     margin: 0;
     width: 100%;
     height: calc(var(--vh, 1vh) * 100);
-    overflow-y: auto;
+    overflow: hidden;
 }
 
 body.age {
@@ -72,7 +72,7 @@ body.age > #age {
     position: relative;
     width: 100vw;
     height: calc(var(--vh, 1vh) * 100);
-    overflow-y: auto;
+    overflow: hidden;
     filter: brightness(1); /* standaard helderheid */
 }
 
@@ -1497,6 +1497,7 @@ body.age > #age {
         width: 100vw;
         height: 100vh;
         margin: 0;
+        overflow: hidden;
     }
 
     .app-window.focused {
@@ -1709,8 +1710,11 @@ body.age > #age {
         .app-window-content {
             overflow-y: scroll;
             -webkit-overflow-scrolling: touch;
-            max-height: 100%;
+            max-height: none;
+            overflow-y: auto;
             touch-action: auto;
+            height: auto;
+            flex-grow: 1;
         }
 
 }
