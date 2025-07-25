@@ -1670,7 +1670,7 @@ body.age > #age {
         #aboutme-cards-container {
             display: flex;
             flex-direction: column;
-
+            overflow: scroll;
         }
         #aboutme-bio-container {
             padding-left: 5%;
