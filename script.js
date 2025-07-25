@@ -8,11 +8,6 @@ function loadSetting(key, defaultValue) {
     return stored !== null ? JSON.parse(stored) : defaultValue;
 }
 
-function isDesktop() {
-    return window.innerWidth >= 730;
-}
-
-
 let savedBrightness = loadSetting('brightness', 100)
 let savedContrast = loadSetting('contrast', 50);
 let savedSaturation = loadSetting('saturation', 100);
@@ -224,7 +219,6 @@ let zIndexCounter = 1000;
 const MAX_Z_INDEX = 9998;
 
 function focusApp(app) {
-    if (!isDesktop()) return;
     const allApps = document.querySelectorAll('.app-window.active');
     allApps.forEach(a => {
         a.style.zIndex = ''; // reset
@@ -545,8 +539,6 @@ function saveWindowState(windowEl) {
 
 
 function makeDraggable(windowEl) {
-    if (!isDesktop() || 'ontouchstart' in window) return;
-
     const topBar = windowEl.querySelector(".app-window-top-bar");
     if (!topBar) return;
 
@@ -598,7 +590,6 @@ function makeDraggable(windowEl) {
 }
 
 function addResizeHandles(el) {
-    if (!isDesktop() || 'ontouchstart' in window) return;
     const directions = [
         "n", "e", "s", "w",
         "ne", "se", "sw", "nw"
