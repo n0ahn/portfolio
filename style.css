@@ -1707,7 +1707,7 @@ body.age > #age {
         }
 
         .app-window-content {
-            overflow-y: auto;
+            overflow-y: scroll;
             -webkit-overflow-scrolling: touch;
             max-height: 100%;
             touch-action: auto;
