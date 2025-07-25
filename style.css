@@ -77,9 +77,9 @@ body.age > #age {
 }
 
 .app-window-content {
-    overflow: scroll;
-    max-height: 100%;
-    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-grow: 1;
 }
 
 .resize-handle {
@@ -154,7 +154,7 @@ body.age > #age {
             justify-content: flex-start;
             align-items: center;
             width: 100%;
-            height: 100%;
+            flex-grow: 1; 
             overflow-y: auto;
             overflow-x: hidden;
             box-sizing: border-box;
@@ -1339,6 +1339,7 @@ body.age > #age {
     display: flex;
     width: 100%;
     height: 100%;
+    overflow: hidden;
     top: 0; bottom: 0; left: 0; right: 0;
     z-index: 100;
     align-items: center;
@@ -1364,6 +1365,7 @@ body.age > #age {
     transform: translateY(100%) perspective(200px) rotateX(15deg);
     opacity: 0;
     transition: all 0.5s ease;
+    overflow: hidden; 
 }
 
 .app-window.active {
@@ -1403,6 +1405,7 @@ body.age > #age {
     justify-content: flex-end;
     align-items: center;
     transition: all 0.3s ease;
+    flex-shrink: 0; 
 }
 
 .app-window.fullscreen .app-window-top-bar {
@@ -1498,6 +1501,7 @@ body.age > #age {
         height: 100vh;
         margin: 0;
         overflow: hidden;
+        border-radius: 0px;
     }
 
     .app-window.focused {
