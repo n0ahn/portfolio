@@ -1703,6 +1703,14 @@ body.age > #age {
         #contact-form-container {
             width: 90%;
         }
+
+        .app-window-content {
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            max-height: 100%;
+            touch-action: auto;
+        }
+
 }
 
 @media (max-width: 350px) {

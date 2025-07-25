@@ -545,7 +545,7 @@ function saveWindowState(windowEl) {
 
 
 function makeDraggable(windowEl) {
-    if (!isDesktop()) return;
+    if (!isDesktop() || 'ontouchstart' in window) return;
 
     const topBar = windowEl.querySelector(".app-window-top-bar");
     if (!topBar) return;
@@ -598,7 +598,7 @@ function makeDraggable(windowEl) {
 }
 
 function addResizeHandles(el) {
-    if (!isDesktop()) return;
+    if (!isDesktop() || 'ontouchstart' in window) return;
     const directions = [
         "n", "e", "s", "w",
         "ne", "se", "sw", "nw"
