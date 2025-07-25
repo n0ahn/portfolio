@@ -32,7 +32,7 @@ html {
     background: var(--color-background-primary);
     width: 100%;
     height: calc(var(--vh, 1vh) * 100);
-    overflow-x: hidden;
+    overflow: hidden;
     filter: brightness(1);
 }
 
@@ -48,8 +48,7 @@ body {
     margin: 0;
     width: 100%;
     height: calc(var(--vh, 1vh) * 100);
-    overflow-x: hidden;
-    overflow-y: hidden;
+    overflow: hidden;
 }
 
 body.age {
@@ -61,7 +60,7 @@ body.age {
     padding: 0;
     height: 100vh;
     width: 100vw;
-    overflow-y: hidden;
+    overflow: hidden;
 }
 
 body.age > #age {
