@@ -468,6 +468,44 @@ document.querySelectorAll('.app-window').forEach(app => {
     });
 });
 
+function minimize(appId) {
+    const app = document.getElementById(appId);
+    const icon = app.querySelector('.minimize-button i');
+    const isMinimized = app.classList.contains('minimized');
+    const isFullscreen = app.classList.contains('fullscreen');
+
+    if (!isMinimized) {
+        if (isFullscreen) {
+            toggleFullscreen(appId);
+        }
+
+        saveWindowState(app);
+        
+        app.classList.add('minimized');
+        
+        app.style.width = '500px'; 
+        app.style.height = '50px';
+        app.style.position = 'fixed';
+        app.style.minWidth = '0'; 
+        app.style.minHeight = '0';
+        app.style.transition = 'all 0.5s ease';
+
+        icon.classList.remove('fa-minus');
+        icon.classList.add('fa-plus');
+    } else {
+        app.classList.remove('minimized');
+
+        app.style.width = app.dataset.prevWidth + 'px';
+        app.style.height = app.dataset.prevHeight + 'px';
+        app.style.position = 'absolute';
+
+        icon.classList.remove('fa-plus');
+        icon.classList.add('fa-minus');
+    }
+}
+
+
+
 
 function toggleFullscreen(appId) {
     const app = document.getElementById(appId);
@@ -557,20 +595,15 @@ function makeDraggable(windowEl) {
     document.addEventListener("mousemove", (e) => {
         if (!isDragging || windowEl.classList.contains("fullscreen")) return;
 
-        const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
 
         let newLeft = e.clientX - offsetX;
         let newTop = e.clientY - offsetY;
 
         const rect = windowEl.getBoundingClientRect();
-        const width = rect.width;
         const height = rect.height;
 
-        if (newLeft < 0) newLeft = 0;
-        if (newTop < 0) newTop = 0;
-        if (newLeft + width > viewportWidth) newLeft = viewportWidth - width;
-        if (newTop + height > viewportHeight) newTop = viewportHeight - height;
+        if (newTop + height > viewportHeight - 100) newTop = viewportHeight - height - 100;
 
         windowEl.style.position = "absolute";
         windowEl.style.left = `${newLeft}px`;
@@ -1465,4 +1498,4 @@ window.addEventListener("hashchange", handleHash);
 
 document.addEventListener("DOMContentLoaded", () => {
     applySavedSettings();
-});
+});3

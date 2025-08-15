@@ -80,6 +80,7 @@ body.age > #age {
     overflow-y: auto;
     overflow-x: hidden;
     flex-grow: 1;
+    box-sizing: border-box;
 }
 
 .resize-handle {
@@ -403,6 +404,7 @@ body.age > #age {
             justify-content: center;
             align-items: center;
             padding: 20px;
+            box-sizing: border-box;
         }
 
         #contact-form-container {
@@ -495,6 +497,7 @@ body.age > #age {
             width: 100%;
             position: relative;
             overflow: hidden;
+            box-sizing: border-box;
         }
 
         #web-searchbar-container {
@@ -1342,10 +1345,11 @@ body.age > #age {
     overflow: hidden;
     top: 0; bottom: 0; left: 0; right: 0;
     z-index: 100;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     opacity: 0;
     pointer-events: none;
+    padding-top: 7vh;
 }
 
 #app-window-container.visible {
@@ -1365,7 +1369,10 @@ body.age > #age {
     transform: translateY(100%) perspective(200px) rotateX(15deg);
     opacity: 0;
     transition: all 0.5s ease;
-    overflow: hidden; 
+    overflow: hidden;
+    min-height: 250px;
+    min-width: 500px;
+    user-select: none;
 }
 
 .app-window.active {
@@ -1439,6 +1446,21 @@ body.age > #age {
 
 .close-button:hover {
     background: var(--color-text-danger);
+    cursor: pointer;
+}
+
+.minimize-button {
+    height: 100%;
+    aspect-ratio: 1.2;
+    border: none;
+    background: none;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.minimize-button:hover {
+    background: var(--color-background-overlay-dark);
     cursor: pointer;
 }
 
